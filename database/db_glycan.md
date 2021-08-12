@@ -144,7 +144,7 @@ O-糖位点数据库。
 
 Glycomics@ExPASy（https://www.expasy.org/glycomics）是 ExPASy 的糖组学部分，包含了糖信息学资源。该数据库的目的是促进糖信息学的研究，它包含了由 SIB 开发和维护的综合数据库和资源（如 GlyConnect, SugarBind 以及 UniCarb-DB）和外部资源（如 CAZy, CSDB, EPS-DB 和 Glyco3D 数据库）。
 
-GlyConnect（https://glyconnect.expasy.org/）是 Glycomics@ExPASy 的糖数据平台，用于辅助表征蛋白质糖基化的分子组成。用户可以通过蛋白质名称、
+GlyConnect（https://glyconnect.expasy.org/ ）是 Glycomics@ExPASy 的糖数据平台，用于辅助表征蛋白质糖基化的分子组成。用户可以通过蛋白质名称、
 
 ### Glygen
 
