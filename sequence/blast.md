@@ -4,12 +4,14 @@
   - [简介](#简介)
   - [BLAST 种类](#blast-种类)
   - [NCBI BLAST](#ncbi-blast)
+    - [NCBI BLAST 数据库](#ncbi-blast-数据库)
     - [blastn](#blastn)
     - [blastp](#blastp)
+    - [新版 BLAST 结果页面](#新版-blast-结果页面)
+  - [结果解释](#结果解释)
   - [PSI-BLAST](#psi-blast)
   - [PHI-BLAST](#phi-blast)
   - [其它 BLAST](#其它-blast)
-  - [biopython BLAST](#biopython-blast)
   - [参考](#参考)
 
 2021-09-30, 11:30
@@ -24,7 +26,7 @@ BLAST 的原理要点是**片段对**的概念，即两个给定序列中的一�
 
 ![](images/2021-09-30-09-17-13.png)
 
-BLAST 首先找出探测序列的目标序列间所有匹配程度超过一定阈值的序列片段对，然后对片段对根据指定的相似性阈值进行延伸，得到一定长度的相似性片段，最后给出高分值片段对（high-scoring pairs, HSPs）。
+BLAST 首先找出长度为 W 分数至少为 T 的片段对，然后根据指定的相似性阈值延伸片段对，得到一定长度的相似性片段，获得高分值片段对（high-scoring pairs, HSPs）。
 
 BLAST 采用统计学打分系统，能将真正配对的序列与随机产生的干扰序列区分开来；同时采用启发式算法系统，即采用局部比对算法，而不是全局比对算法。
 
@@ -70,6 +72,14 @@ BLAST 的主页结构如下所示：
 常用的 BLAST 序列数据库：
 
 ![](images/2021-09-29-15-33-41.png)
+
+### NCBI BLAST 数据库
+
+|核酸数据库|内容|
+|---|---|
+|nt(默认)|包括 GenBank+EMBL+DDBJ+PDB+RefSeq 序列，但不包括 EST,STS,GSS,WGS,TSA,专利序列，phase 0, 1, 2 HTGS 序列以及长度大于 100Mb 的序列，非冗余，相同序列合并到位一条，同时保留每条序列的 accession, GI, title 以及 taxonomy 信息|
+|refseq_select|该数据库包含人和小鼠的 RefSeq 转录本序列，不过对每个蛋白质只保留一条代表性的转录本|
+|refseq_rna|NCBI 转录本参考序列|
 
 ### blastn
 
@@ -127,6 +137,30 @@ blastp 使用蛋白质序列搜索蛋白质序列数据库。其 NCBI 的输入�
 有一点点相似，也就是远源的序列，就有点麻烦了，它们很有可能被丢掉而没有被 BLAST
 发现。 
 
+### 新版 BLAST 结果页面
+
+![](images/2021-10-09-10-09-59.png)
+
+BLAST 详细信息 D：
+
+|信息|说明|
+|---|---|
+|Job Title|默认显示第一条序列的 id，可以在提交任务前自定义|
+|RID|检索的识别符|
+|Download All|提供下载完整检索结果功能，支持多种文件格式|
+
+## 结果解释
+
+Max Score: 查询序列和数据库序列额最高比对打分（bit-score），它和 E 值近似反比关系，较大的 bit-score 是随机获得的概率越小。
+
+Total Score：同一 db 中所有序列的比对打分加和。
+
+Percent Query Coverage：查询序列中包含在对齐片段中的百分比。
+
+E-value：序列相似是随机事件的度量值。
+
+Percent Identity：查询序列和对齐序列的相似程度。
+
 ## PSI-BLAST
 
 为了提高速度，标准 BLAST 牺牲了一定的准确度，虽然不影响高度相似的序列，也就是亲缘关系近的序列，不会把它们漏掉，但是对于那些只有一点点相似，也就是远源的序列，就有点麻烦了。它们很可能被漏掉而没有被 BLAST 发现。 换言之，你找到了你直接认识的朋友，而丢掉了朋友的朋友。
@@ -161,24 +195,6 @@ PHI-BLAST 可以和PSI-BLAST 联合使用，以找到更多符合模式的远房
 ![](images/2021-09-30-12-39-29.png)
 
 ![](images/2021-09-30-12-39-46.png)
-
-## biopython BLAST
-
-使用 `Bio.Blast.NCBIWWW` 模块的 `qblast()` 函数，该函数需要三个参数：
-
-- 参数一是程序名称的小写形式。可用程序参考 [NCBI](https://blast.ncbi.nlm.nih.gov/Blast.cgi)，目前 qblast 支持 blastn, blastp, blastx, tbalst 和 tblastx；
-- 参数二是待搜索的数据库；
-- 最后一个是待检索的序列，可以使序列本身，也可以使 fasta 文件，或者序列的识别号。
-
-`qblast` 函数也有其它的一系列参数，和 BLAST 网页上的参数基本一致。
-
-`qblast` 函数返回的 BLAST 结果支持多种格式，可以通过 `format_type` 参数设置，包括："HTML", "Text", "ASN.1" 和 "XML"。默认为 XML。
-
-参数 `expect` 设置期望阈值。
-
-需要注意的是，NCBI BLAST 网站上 BLAST 的默认参数和 QBLAST 的默认参数不完全一样。需要仔细检查参数。
-
-
 
 ## 参考
 
