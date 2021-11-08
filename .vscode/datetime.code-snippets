@@ -13,5 +13,13 @@
 			"$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE, $CURRENT_HOUR:$CURRENT_MINUTE",
 		],
 		"description": "add current date time"
+	},
+	"info":{
+		"scope": "",
+		"prefix": ["info", "if"],
+		"body": [
+
+		],
 	}
+	
 }
