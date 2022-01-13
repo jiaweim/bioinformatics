@@ -3,7 +3,16 @@
 - [PDB 数据库](pdb_database.md)
 - [PDB 格式](pdb_format.md)
 
-## 推荐软件
+## 预测软件
+
+- [SWISS-MODEL](https://swissmodel.expasy.org/)
+- [Robetta](https://robetta.bakerlab.org/)
+
+据说不准确。
+
+- alpha fold2，Google
+- tfold，腾讯
+- 
 
 ## 结构可视化
 
