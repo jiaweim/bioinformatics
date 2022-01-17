@@ -7,6 +7,7 @@
     - [AlphaFold 缺点](#alphafold-缺点)
     - [ColabFold 使用](#colabfold-使用)
     - [完整版使用](#完整版使用)
+  - [硬件要求](#硬件要求)
   - [参考](#参考)
 
 ## 简介
@@ -51,6 +52,10 @@ AlphaFold DB 目前提供下表所示的预测的蛋白结构数据库。
 
 CASP 比赛已进行 14 届，从1994年开始，每 2 年一次。第 15 届预计在 2022 年春开始。这些实验的完整数据可以在官网找到：https://www.predictioncenter.org/ 。
 
+![](images/2022-01-17-16-23-34.png)
+
+
+
 ## AlphaFold
 
 AlphaFold 骨架准确性中位数为 0.96 Å RMSD$_{95}$（95% 残基覆盖率下 $C_{\alpha}$ 的均方根偏差）（95% CI=0.85 Å - 1.16 Å）,而次优的方法骨架精度中位数为 2.8 Å RMSD$_{95}$（95% CI=2.7Å - 4.0Å）。
@@ -75,13 +80,37 @@ https://colab.research.google.com/github/deepmind/alphafold/blob/main/notebooks/
 
 与 AlphaFold V2.1.0 相比，这个 Colab 没有使用模板（同源结构）和 [BFD 数据库](https://bfd.mmseqs.com/)的选定部分。DeepMind 团队在最近的几千个 PDB 结构上验证了这些变化，大部分预测结果和 AlphaFold 几乎完全相同，但由于MSA 较小、缺乏模板，小部分的精度有很大下降。要获得最佳的结果，建议使用完全开源的 AlphaFold，或者 AlphaFold 蛋白质结构数据库 。
 
-与本地 AlphaFold 相比，ColabFold 
-
 ### 完整版使用
 
 RTX2080ti 小一些蛋白跑起来还行，但序列长度到 500 就可能会挂，最好有 V100，A100 显存 10G 以上，多多益善。
 
 如果没有 GPU，推荐使用 ColabFold。
+
+## 硬件要求
+
+参考：https://github.com/deepmind/alphafold
+
+DeepMind 在 Google 云上的配置：
+
+- 12 vCPUs, vCPU 即 virtual centralized processing unit，虚拟 CPU
+- **85 GB** of RAM
+- **100 GB** boot disk, 
+- the databases on an additional **3 TB** disk
+- 1 个 A100 GPU
+
+NVIDIA A100：https://www.nvidia.cn/data-center/a100/
+
+NVIDIA A100 Tensor Core GPU 可针对 AI、数据分析和 HPC 应用场景，在不同规模下实现出色的加速，有效助力全球高性能弹性数据中心。NVIDIA A100 由 NVIDIA Ampere 架构提供支持，提供 40GB 和 80GB 两种配置。作为 NVIDIA 数据中心平台的引擎，A100 的性能比上一代产品提升高达 20 倍，并可划分为七个 GPU 实例，以根据变化的需求进行动态调整。A100 80GB 将 GPU 内存增加了一倍，提供超快速的内存带宽（每秒超过 2TB），可处理超大模型和非常庞大的数据集。
+
+价格：http://www.itsto.com/product/tesla_gpu.html
+
+![](images/2022-01-14-16-23-05.png)
+
+也有用 4 张 Tesla V100S 32GB*4 配置环境，单张价格：
+
+![](images/2022-01-14-16-25-08.png)
+
+> 玩不起。。。
 
 ## 参考
 

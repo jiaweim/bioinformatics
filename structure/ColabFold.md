@@ -4,6 +4,7 @@
   - [简介](#简介)
   - [概述](#概述)
   - [使用](#使用)
+    - [Colab](#colab)
   - [参考](#参考)
 
 2022-01-12, 15:38
@@ -53,6 +54,16 @@ AlphaFold2_mmseqs2
 - 使用模板信息
 - 使用 amber force fields 松弛预测的结构
 - monomer complex 预测
+
+### Colab
+
+打开链接：
+
+https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
+
+打开页面，是下面的样子：
+
+![](images/2022-01-14-17-09-41.png)
 
 
 

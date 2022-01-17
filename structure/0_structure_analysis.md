@@ -7,12 +7,9 @@
 
 - [SWISS-MODEL](https://swissmodel.expasy.org/)
 - [Robetta](https://robetta.bakerlab.org/)
-
-据说不准确。
-
 - alpha fold2，Google
 - tfold，腾讯
-- 
+- ColabFold
 
 ## 结构可视化
 
@@ -21,5 +18,3 @@
 - vmd
 - rasmal
 - jmol
-
-
