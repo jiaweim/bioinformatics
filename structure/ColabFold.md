@@ -65,7 +65,11 @@ https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold
 
 ![](images/2022-01-14-17-09-41.png)
 
+参数说明：
 
+- `use_amber`，表示折叠后进行结构优化，选择或增加计算时间；
+- `use_templates`，使用可以增加折叠的精度；
+- `homooligomer`，同一段蛋白的多聚体，如果是二聚体，填 2；
 
 ## 参考
 

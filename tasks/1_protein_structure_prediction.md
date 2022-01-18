@@ -16,7 +16,6 @@ https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold
 
 https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2_complexes.ipynb
 
-
 ## 使用流程
 
 最基本的使用很简单，打开上面的 jupyter 后：
@@ -24,4 +23,3 @@ https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold
 ![](images/2022-01-17-16-16-27.png)
 
 将序列贴如上面的窗口，然后选择 "代码执行程序" -> "全部执行" 就可以了。
-
