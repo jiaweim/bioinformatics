@@ -85,33 +85,6 @@
 - 双击 PDB 文件打开 PyMOL，会自动切换工作目录到该 PDB 文件所在目录；
 - 从软件安装处打开 PyMOL，则工作目录为软件安装目录。
 
-## 下载蛋白
-
-`fetch` 命令：https://pymolwiki.org/index.php/Fetch
-
-- 下载蛋白
-
-命令： `fetch pdb_id`
-
-```sh
-fetch codes [, name [, state [, finish [, discrete [, multiplex [, zoom [, type [, async ]]]]]]]]
-```
-
-- `codes`
-
-蛋白的 pdb 编号，可以一次下载一个或多个，多个编号以空格分开。
-
-例如下载 `4hbk` 蛋白结构，直接在命令行输入 `fetch 4hbk`，回车，PyMOL 会自动下载该蛋白，格式为 cif，并图示化显示：
-
-![](images/2022-01-17-15-08-59.png)
-
-下载的文件 `4hbk.cif` 文件在工作目录。
-
-PDB 格式原子个数不能超过 9999 个原子，随着结构越来越大，PDB 的局限性就暴露出来了，目前逐渐被 cif 格式取代。
-
-- `type`
-
-用于指定文件类型，可用值 `cif|mmtf|pdb|pdb1|2fofc|fofc|emd|cid|sid|cc`。
 
 ## 查看蛋白
 

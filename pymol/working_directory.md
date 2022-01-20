@@ -4,6 +4,7 @@
   - [pwd](#pwd)
   - [ls](#ls)
   - [cd](#cd)
+  - [参考](#参考)
 
 ## pwd
 
@@ -53,3 +54,7 @@ cd ~
 ```sh
 cd /tmp
 ```
+
+## 参考
+
+- https://pymolwiki.org/index.php/Cd
