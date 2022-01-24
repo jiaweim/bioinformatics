@@ -31,7 +31,7 @@ RoseTTAFold 独立重现和实现了许多 AlphaFold2 的想法。除了预测�
 
 如此惊人的算力需求，可能大部分研究人员都没有，为了能让大家都能使用 AlphaFold2，于是开发了基于谷歌的 Colab 的平台。Colab 是由 Google 托管的 Jupyter Notebook 版本。登录之后可以免费使用，关键是提供了免费使用的 GPU。Tunyasuvunakool 等为 Colab 开发了一个 [AlphaFold2 Jupyter Notebook](https://colab.research.google.com/github/deepmind/alphafold/blob/main/notebooks/AlphaFold.ipynb)，不过其输入 MSA 是使用 HMMer 对聚类 UniProt （缩小了 8 倍）进行搜索而构建，导致预测不准确，而且所需时间依然很长。
 
-于是就有了 ColabFold，ColabFold 易于使用，可用于蛋白质和复合物结构的预测，可以在 Google 的 colab 使用，也可以通过命令行界面在本地使用。ColabFold 使用 MMseqs2 替代 AlphaFold2 特征生成阶段所用工具，从而加快速度。通过避免重新编译和添加早期停止标准，加快了对多个结构的预测。经验证，在 CASP14 上 ColabFold 性能优于 AlphaFold-Colab，与  AlphaFold2 近似，但是速度快乐 20-30 倍。ColabFold 可以在消费级 GPU 上在 41 小时内计算一个蛋白质组（不包含长度 > 1000 的蛋白质）。
+于是就有了 ColabFold，ColabFold 易于使用，可用于蛋白质和复合物结构的预测，可以在 Google 的 colab 使用，也可以通过命令行界面在本地使用。ColabFold 使用 MMseqs2 替代 AlphaFold2 特征生成阶段所用工具，从而加快速度。通过避免重新编译和添加早期停止标准，加快了对多个结构的预测。经验证，在 CASP14 上 ColabFold 性能优于 AlphaFold-Colab，与  AlphaFold2 近似，但是速度快 20-30 倍。ColabFold 可以在消费级 GPU 上在 41 小时内计算一个蛋白质组（不包含长度 > 1000 的蛋白质）。
 
 ![](images/2022-01-12-15-47-29.png)
 
@@ -75,3 +75,5 @@ https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold
 
 - https://www.biorxiv.org/content/10.1101/2021.08.15.456425v2
 - https://github.com/sokrypton/ColabFold
+- https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb
+- https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb

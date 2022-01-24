@@ -11,8 +11,8 @@
     - [Transparency](#transparency)
     - [Electrostatisc](#electrostatisc)
   - [工作目录](#工作目录)
-  - [下载蛋白](#下载蛋白)
   - [查看蛋白](#查看蛋白)
+  - [设置背景颜色](#设置背景颜色)
 
 ## 用户界面
 
@@ -85,7 +85,6 @@
 - 双击 PDB 文件打开 PyMOL，会自动切换工作目录到该 PDB 文件所在目录；
 - 从软件安装处打开 PyMOL，则工作目录为软件安装目录。
 
-
 ## 查看蛋白
 
 - 菜单选项：用 `File -> Open...` 菜单打开文件
@@ -98,3 +97,10 @@
 load filename [,object [,state [,format [,finish [,discrete [,multiplex ]]]]]]
 ```
 
+## 设置背景颜色
+
+设置背景颜色为白色
+
+```sh
+bg_color white
+```

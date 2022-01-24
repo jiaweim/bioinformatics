@@ -5,6 +5,9 @@
   - [CASP](#casp)
   - [AlphaFold 框架](#alphafold-框架)
     - [基本原理](#基本原理)
+    - [AlphaFold 优点总结](#alphafold-优点总结)
+    - [Recycling 的必要性](#recycling-的必要性)
+    - [如何评估预测结果](#如何评估预测结果)
     - [AlphaFold 缺点](#alphafold-缺点)
     - [ColabFold 使用](#colabfold-使用)
     - [完整版使用](#完整版使用)
@@ -92,7 +95,13 @@ AlphaFold 骨架准确性中位数为 0.96 Å RMSD$_{95}$（95% 残基覆盖率�
 
 ![](images/2022-01-19-10-47-08.png)
 
-![](images/2022-01-19-10-48-49.png)
+### AlphaFold 优点总结
+
+- **基于 recycling 的迭代优化**。这一点在很多领域已经得到过应用，比如计算机视觉中的姿态估计（post estimation）
+- **广泛应用的 Attention 架构**。将二维的表横着做 Attention、再竖着做 Attention，对于图可以在局部做 Attention，不断精化了 Embedding 过程；Structure module 中也继续用到了 Attention
+- **实现了端到端（end-to-end）架构**。完整建立了用于蛋白质结构预测的端到端架构，让模型能够在提升准确度的同时，融合结构的优化步骤
+- **半监督学习扩展训练集（Self Distillation）**。用带标签的数据先训练一遍，再用无标签的数据预测一遍形成新的数据集，然后再混合继续训练。这种方法曾经在 Google Brain 的 noist student 使用过，在这里再次得到应用
+- 类似 BERT 的 mask 结构。Mask 对各种输入添加噪音以增加模型的鲁棒性，这在 BERT 类模型中非常常见
 
 ![](images/2022-01-19-10-49-31.png)
 
@@ -101,6 +110,10 @@ AlphaFold 骨架准确性中位数为 0.96 Å RMSD$_{95}$（95% 残基覆盖率�
 ![](images/2022-01-19-10-54-11.png)
 
 ![](images/2022-01-19-11-07-13.png)
+
+### Recycling 的必要性
+
+有的很快就能够折叠，有的蛋白很慢。
 
 ![](images/2022-01-19-11-15-19.png)
 
@@ -121,6 +134,22 @@ AlphaFold 骨架准确性中位数为 0.96 Å RMSD$_{95}$（95% 残基覆盖率�
 ![](images/2022-01-19-11-46-25.png)
 
 ![](images/2022-01-19-12-40-57.png)
+
+### 如何评估预测结果
+
+常用于评估 AlphaFold 建模精度的指标。
+
+**pLDDT**：每个氨基酸的预测准确度：
+
+- 低于 50，表示非常不准确或为无规则蛋白
+- 低于 70，表示可信度低
+- 高于 90，可信度极高
+
+PAE：反应每对氨基酸距离与真实值的预测差值：
+
+- 越低越好，单位为 Angstrom
+- 在反应多 Domain 或 Complex 结构精度是效果很好
+- 只有 pTM 模型和 Multimer 模型才有 PAE 打分。
 
 ![](images/2022-01-19-12-48-03.png)
 

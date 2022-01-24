@@ -27,7 +27,7 @@ fetch codes [, name [, state [, finish [, discrete [, multiplex [, zoom [, type 
 
 - `name`
 
-`str` 类型，加载文件后显示对象的名称，默认为 pdb accession。
+`str` 类型，用于指定加载文件后对象的名称，默认为 pdb accession。
 
 - `type`
 

@@ -13,3 +13,4 @@ My study notes about bioinformatics
 
 - 山东大学公开课：生物信息学
 - [Bioinformatics Algorithms](https://www.bioinformaticsalgorithms.org/)
+- https://liulab-dfci.github.io/bioinfo-combio/index.html
