@@ -14,6 +14,7 @@
       - [IBV-Beaudette-S](#ibv-beaudette-s)
       - [IBV-KC-p4-S](#ibv-kc-p4-s)
       - [IBV-KC-F9-S](#ibv-kc-f9-s)
+  - [参考工具](#参考工具)
 
 2022-01-12, 11:26
 ***
@@ -57,6 +58,10 @@ AlphaFold2 对硬件要求太高，没有满足要求的电脑配置，无法部
 **2022-01-17, 16:56**
 
 使用 ColabFold 预测蛋白结构。
+
+**2022-01-24, 16:31**
+
+结构分析。
 
 ## 了解 IBV
 
@@ -209,8 +214,7 @@ MLVTPLLLVTLLCALCSAVLYDSSSYVYYYQSAFRPPSGWHLQGGAYAVVNISSEFNNAGSSSGCTVGIIHGGRVVNASS
 
 ![](images/ibvs1_def28_plddt.png)
 
-从上图可以看出，5 个模型的 pLDDT 打分，rank_1 的打分最高。
-
+从上图可以看出，5 个模型的 pLDDT 打分，rank_1 的打分最高。两侧和中间连接部分，结构预测不是很准确（链比较灵活）。
 
 #### IBV-KC-p4-S1
 
@@ -234,6 +238,18 @@ MLVTPLLLVTLLCALCSAVLYDSSSYVYYYQSAFRPPSGWHLQGGAYAVVNISSEFNNAGSSSGCTVGIIHGGRVVNASS
 
 F9 相对 p4，包含一个 S248T 突变。
 
+P4-S1 相对 IBV-S1 的 RMSD = 20.699
+
+F9-S1 相对 IBV-S1 的 RMSD = 19.474，相对 P4 和原 IBV-S1 的结构更相似，但是差距不大。
+
+![](images/2022-01-24-17-28-22.png)
+
+说明：
+
+- 蓝色：IBV-S1
+- 红色：IBV-P4-S1
+- 绿色：IBV-F9-S1
+
 ### S 预测
 
 #### IBV-Beaudette-S
@@ -241,3 +257,9 @@ F9 相对 p4，包含一个 S248T 突变。
 #### IBV-KC-p4-S
 
 #### IBV-KC-F9-S
+
+## 参考工具
+
+- AlphaFold2
+- ColabFold
+- PyMOL

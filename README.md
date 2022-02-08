@@ -2,6 +2,11 @@
 
 My study notes about bioinformatics
 
+## 学习资料
+
+- https://github.com/danielecook/Awesome-Bioinformatics
+- https://github.com/ossu/bioinformatics
+
 ## 网络课程
 
 - [Bioinformatics Specialization](https://www.coursera.org/specializations/bioinformatics)
