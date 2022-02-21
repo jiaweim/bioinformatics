@@ -37,6 +37,8 @@ MS1 价态分布会随着实验条件而变化。其中质量分析仪的电荷�
 
 **iRT 数据**由 HeLa 和 HEK293 细胞裂解液进行三次 DIA 技术重复获得，柱长 1m，采集时间 4h。鉴定假阳性控制在 1%，将重复鉴定的肽段和不同电荷的肽段汇总，使用汇总的 iRT 的中位数。肽段长度要求不大于 40，iRT 模型总的肽段数为 125,793，随机选择其中 10% 作为测试集，余下 90% 作为 iRT 模型的训练集。
 
+**电荷状态分布数据**：电荷状态分布模型是从 ProteomeExchange 下载的 DDA 数据。这些数据包括 0.5-4h 单针数据，也包含高 pH 分级样本数据。使用 PAVA （一个 Visual Basic 程序）将raw 数据文件导出为 peak list。使用 MSGF+ 搜索二级谱，蛋白质序列库采用 human proteome (UP000005640)，包含 71,778 条序列（下载时间 20180206）。Trypsin 最大漏切数设为 5，Cys 固定修饰 carbamidomethylation，Met 可变修饰 oxidation，肽段 N-端 glutamine 可变修饰 pyro-glu，蛋白 N-端可变修饰 acetylation.......
+
 
 
 ## 参考

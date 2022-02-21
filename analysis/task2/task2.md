@@ -9,6 +9,7 @@
     - [CTL 表位的保护分析](#ctl-表位的保护分析)
   - [多表位疫苗序列](#多表位疫苗序列)
   - [TLR](#tlr)
+  - [ImmSim](#immsim)
   - [参考](#参考)
 
 2022-01-26, 15:14
@@ -88,6 +89,24 @@ TLR 在病毒感染后的固有免疫应当中发挥重要作用，特别是 TLR
 TLR2 的 PDB ID：2Z7X 作为目标蛋白。
 
 ClusPro 2.0 server 和 PatchDock 用于对接。
+
+## ImmSim
+
+**HLA 选择**
+
+A0201
+A0101
+
+B0702
+B0801
+
+DRB10701
+DRB11501
+
+Simulation Vlume:
+
+Inject time step: 9,93,177
+
 
 ## 参考
 

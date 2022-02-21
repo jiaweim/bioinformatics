@@ -173,7 +173,7 @@ Kar,T. et al. (2020) A candidate multi-epitope vaccine against SARS-CoV-2. Sci R
 
 Dong,R. et al. (2020) Contriving Multi-Epitope Subunit of Vaccine for COVID-19: Immunoinformatics Approaches. Frontiers in Immunology, 11.
 
-注射 3 次疫苗，间隔 4 轴。simulation volume 为 1,000，
+注射 3 次疫苗，间隔 4 周。simulation volume 为 1,000，
 
 ## 参考
 
