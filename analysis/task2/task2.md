@@ -92,6 +92,14 @@ ClusPro 2.0 server 和 PatchDock 用于对接。
 
 ## ImmSim
 
+https://kraken.iac.rm.cnr.it/C-IMMSIM/index.php?page=1
+
+Random Seed: 12345
+
+Simulation Volume: 10
+
+Simulation Steps: 1000
+
 **HLA 选择**
 
 A0201
@@ -103,7 +111,7 @@ B0801
 DRB10701
 DRB11501
 
-Simulation Vlume:
+Simulation Volume:
 
 Inject time step: 9,93,177
 
