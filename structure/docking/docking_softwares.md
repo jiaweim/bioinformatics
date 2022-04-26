@@ -2,6 +2,8 @@
 
 ## 总结
 
+http://www.vls3d.com/index.php/links/bioinformatics/protein-protein-interaction/protein-protein-docking
+
 LeDock, http://www.lephar.com/download.htm
 
 HADDOCK 蛋白质-蛋白质复合物，精度很高。
@@ -88,6 +90,20 @@ https://www.bilibili.com/video/BV1tV411B7Sn
 (1)  GOLD和LeDock具有最好的采样性能(GOLD:59.8%的最高分pose准确率；LeDock:80.8%的最佳pose准确率)。
 
 (2)  AutoDockVina、GOLD与MOE Dock的评分性能最好，最高分pose的rp/rs 分别是 0.564/0.580、0.500/0.515和0.569/0.589。
+
+## 蛋白-蛋白对接
+
+Hex Protein Docking, ZDock, rDock 以及 Rosetta 等：
+
+- Hex Protein Docking 算法复杂，耗时长
+- ZDock 一般作为前期的初对接
+- rDock 为 ZDock 的升级算法，一般将 ZDock 对接后的前几个得分构象使用 rDock 进行进一步对接
+- Rosetta
+
+蛋白-蛋白对接也分为柔性对接和刚性对接两种。
+
+- 刚性对接中蛋白质的主链固定，只进行移动或转动，这种方法精度较低，但是耗时短，计算量小。在实际操作中可以用蒙特卡洛算法产生的大量随机来达到期望的精度；
+- 柔性对接中两个蛋白质的主链进行移动程度的摆动，更加符合实际情况，但是这种方法耗时长，不过可以用较小样本量达到预定的精度。
 
 ## 参考
 

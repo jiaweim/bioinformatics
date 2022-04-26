@@ -55,4 +55,4 @@ NetMHCpan 同时对结合亲和力和洗脱配体数据进行训练。
 
 https://help.iedb.org/hc/en-us/articles/114094151851
 
-在特定人群中，某些 HLA 等位基因比其它等位基金出现更频繁（http://www.allelefrequencies.net/）。
+在特定人群中，某些 HLA 等位基因比其它等位基金出现更频繁（http://www.allelefrequencies.net/ ）。
