@@ -111,3 +111,89 @@ Hex Protein Docking, ZDock, rDock 以及 Rosetta 等：
 - https://www.computabio.com/molecular-docking-software.html
 - https://click2drug.org/
 - https://www.capri-docking.org/
+
+文献报道过的或者没报道过的分子对接软件有很多，很多最初都是由实验室开发，免费发布。当软件很完善，没有什么缺陷时，可能会被专门的商业软件公司购买，就变成了某个大型软件包中的模块。
+
+其实不止分子对接软件，其他还有药效团软件、定量构效关系软件、数据库筛选软件等，都是这样的发展历程。不过，其中还是有一些实验室，在商品化大潮的影响下屹立不倒，依旧免费给我们提供免费的强大的软件，甚至是源代码（source code）。
+
+
+
+1、AutoDock
+
+据官方数据显示，autodock是引用文献最多的软件（Sousa, Fernandes & Ramos (2006) Protein-Ligand Docking: Current Status and Future Challenges Proteins, 65:15-26）。AutoDock向外提供源代码，只要下载协议单（license agreement），签名后传真发回，就可以获得下载链接和帐号信息。
+
+这里有一些精美的小电影可以下载：http://autodock.scripps.edu/movies
+
+官方主页：http://autodock.scripps.edu/
+
+
+
+2、DOCK
+
+DOCK也是以源代码发布，对学术用户免费。可以向官方发邮件申请，他们会返回一个下载链接和帐号，可以使用5次。当5次用完后，又出了新的版本，可再次用http://sohu.com信箱发邮件，声明想再多要一些登陆机会申请新版本，又获得5次机会。所以，大家如果对DOCK感兴趣，不妨发邮件，应该差不多，当然，如果用http://edu.cn的信箱，成功的几率会更大。
+
+
+
+3、3D-DOCK
+
+免费以源代码发布，分为三个部分：FTDock, RPScore，MultiDock。
+
+
+
+4、FRED
+
+是Openeye软件包中的一个模块。Openeye软件包对学术用户免费1年，普通用户可以申请2个月的试用期。只要在线申请就可以，不需要下载申请表打印签字发传真。FRED速度很快，在各种平台都可运行。
+
+可以从这里申请试用版：http://www.eyesopen.com/forms/eval_request.phpOpeneye软件包中除了分子对接软件，还有数据库筛选软件，分子格式转化软件（Babel），图形可视化软件（Vida），溶剂化工具等。
+
+官方主页：http://www.eyesopen.com/
+
+
+
+5、Surflex
+
+对学术用户免费。
+
+官方主页：http://www.biopharmics.com/products.html
+
+
+
+6、HEX
+
+免费软件，由于了解有限，不多做介绍。
+
+
+
+7、FlexX
+
+是另一个运算速度超快的分子对接软件，收费。不过可以申请6周的试用版，速度很快。有独立运行版本，也有Sybyl软件包(Tripos Co. Ltd.)中的一个模块。
+
+官方主页：http://www.biosolveit.de/FlexX/
+
+
+
+8、Glide
+
+收费软件，是Maestro软件包中的一个模块。运算速度也很快。
+
+
+
+9、GOLD
+
+收费软件，精度很好。以前可以申请2个月的试用版，不知现在是否还可以。
+
+
+
+10、ICM
+
+ICM-pro是很大型的软件包，收费，功能很强大，据说精度也很高。不过ICM-Browser是免费的，可以下载。
+
+下载链接：http://www.molsoft.com/icm_browser.html官方主页：http://www.molsoft.com/index.html
+
+
+
+11、MVD
+
+官方数据表明是对接精度最好的软件，甚至要超过了Glide、Surflex、FlexX等软件。提供一个月的试用期。使用过感觉运行速度很慢，按默认设置，对接一个分子需要10分钟。
+
+以上介绍的大多是进行大分子与小分子配体分子对接的软件。当然，其中的一些软件也可以做大分子的对接。越来越多的文献报道蛋白质－蛋白质和蛋白质－核酸的分子对接，比如ESCHER、MONTY、HADDOCK、Z-DOCK、HEX等软件，FTDOCK也可以做这方面的工作。如果有机会，会再做介绍。 作者：Studying9 https://www.bilibili.com/read/cv12756182 出处：bilibili

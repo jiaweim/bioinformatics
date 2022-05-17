@@ -1,6 +1,6 @@
 # 生物信息学（Bioinformatics）
 
-My study notes about bioinformatics
+Study notes about bioinformatics
 
 ## 学习资料
 

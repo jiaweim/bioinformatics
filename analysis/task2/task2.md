@@ -10,7 +10,8 @@
   - [多表位疫苗序列](#多表位疫苗序列)
   - [TLR](#tlr)
   - [ImmSim](#immsim)
-  - [](#)
+  - [结构预测](#结构预测)
+  - [分子对接](#分子对接)
   - [参考](#参考)
 
 2022-01-26, 15:14
@@ -116,7 +117,45 @@ Simulation Volume:
 
 Inject time step: 9,93,177
 
-## 
+## 结构预测
+
+使用 RoseeTTAFold 预测三级结构：
+
+https://robetta.bakerlab.org/
+
+1. 提交序列：
+
+https://robetta.bakerlab.org/submit.php
+
+结构优化：
+
+GalaxyRefine
+
+https://galaxy.seoklab.org/index.html
+
+ModRefiner:
+
+https://zhanggroup.org/ModRefiner/
+
+结构评估（SAVES）：
+
+https://saves.mbi.ucla.edu/
+
+## 分子对接
+
+ClusPro:
+
+https://cluspro.bu.edu/
+
+TLR-2 (6NIG)
+
+This protein has 4 chains.
+
+TLR-4 (4G8A)
+
+MHC-I (2X4O)
+
+MHC-II (1T5W)
 
 ## 参考
 
