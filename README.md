@@ -30,6 +30,7 @@ Study notes about bioinformatics
 - [Genomic Data Science Specialization](https://www.coursera.org/specializations/genomic-data-science)
 - [Biology Meets Programming: Bioinformatics for Beginners](https://www.coursera.org/learn/bioinformatics)
 - [Bioinformatic Methods I](https://www.coursera.org/learn/bioinformatics-methods-1)
+- [Computational Biology: Structure and Organization of Biomolecules and Cells](https://web.stanford.edu/class/cs279/)
 
 ## 参考资料
 

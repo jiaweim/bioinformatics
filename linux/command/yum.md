@@ -4,7 +4,7 @@
   - [语法](#语法)
   - [简介](#简介)
   - [command](#command)
-    - [安装](#安装)
+    - [install](#install)
   - [参考](#参考)
 
 2022-05-17, 13:01
@@ -50,13 +50,13 @@ yum 与其它高级包管理器类似，如 apt-get、smart 等，是 CentOS 的
 |yum groups install softwarename|安装组件|
 |yum groups remove softwarename|卸载组件|
 
-### 安装
+### install
 
 ```sh
 yum install pkg1 [pkg2] [...]
 ```
 
-安装最新版本的软件。并确保所有依赖关系满足。
+安装软件（默认安装最新版本）。并确保所有依赖关系满足。
 
 - 如果没有对应名称的软件包，则假设该名称为 shell glob，并安装任何名称匹配的软件包；
 - 如果名称以 @ 开头，则作为 `groupinstall` 名称处理；
