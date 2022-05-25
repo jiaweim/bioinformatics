@@ -14,6 +14,7 @@
 - [工作目录](working_directory.md)
 - [下载蛋白 - Fetch](cmd_fetch.md)
 - [名称操作](pymol_name.md)
+- [删除原子](commands/remove.md)
 
 ## 任务
 

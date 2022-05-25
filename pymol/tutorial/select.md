@@ -3,8 +3,7 @@
 - [选择](#选择)
   - [简介](#简介)
   - [选择表达式](#选择表达式)
-  - [选择语法](#选择语法)
-    - [选择运算符](#选择运算符)
+  - [选择运算符](#选择运算符)
   - [select](#select)
   - [参考](#参考)
 
@@ -13,7 +12,13 @@
 
 ## 简介
 
-选择是必须要掌握的 PyMOL 操作之一。
+选择是必须要掌握的 PyMOL 操作之一。PyMOL 允许根据标识符和属性选择原子。许多命令（如 `color`, `show` 等）都支持对选择的原子子集进行操作。例如：
+
+```sh
+PyMOL>show spheres, solvent and chain A
+```
+
+和逻辑运算符 `and`, `or` 和 `not` 结合，选择语法更加强大。`and` 表示只选择满足所有属性的原子，而 `or` 则选择满足任一条件的原子。
 
 ## 选择表达式
 
@@ -23,18 +28,16 @@
 ! @ # $ % ^ &* ( ) ' " [ ] { } \ | ~ ` <> . ? /
 ```
 
-## 选择语法
+## 选择运算符
 
-### 选择运算符
-
-选择运算符和修饰符如下表所示。变量 `s1` 和 `s2` 表示选择表达式。
+选择运算符和修饰符如下表所示。变量 `s1` 和 `s2` 表示选择表达式，如 "chain a" 或 "hydro"。
 
 |运算符|等价操作符|说明|
 |---|---|---|
 |**通用操作**|||
 |all|*|PyMOL 载入的所有原子|
 |none||空选择|
-|enabled||激活对象的原子|
+|enabled||enabled 对象的原子|
 |**命名选择**|||
 |sele||命名选择或对象 "sele"（前提是不与其它运算符名称重复）|
 |%sele||命名选择或对象 "sele"，推荐使用|
@@ -74,3 +77,4 @@ select name [, selection [, enable [, quiet [, merge [, state ]]]]]
 ## 参考
 
 - https://pymolwiki.org/index.php/Category:Selecting
+- https://pymolwiki.org/index.php/Selection_Algebra
