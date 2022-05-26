@@ -1,5 +1,9 @@
 # GROMACS
 
+## 命令
+
+- [pdb2gmx](commands/pdb2gmx.md)
+
 ## 参考
 
 - https://www.gromacs.org/

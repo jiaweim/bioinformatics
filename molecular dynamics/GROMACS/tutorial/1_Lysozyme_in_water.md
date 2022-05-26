@@ -4,7 +4,8 @@
   - [简介](#简介)
   - [准备拓扑结构](#准备拓扑结构)
     - [GROMACS 常识](#gromacs-常识)
-    - [溶菌酶](#溶菌酶)
+    - [生成溶菌酶的拓扑文件](#生成溶菌酶的拓扑文件)
+    - [检查拓扑文件](#检查拓扑文件)
   - [参考](#参考)
 
 2022-05-24, 17:16
@@ -36,7 +37,7 @@ gmx (module) -h
 
 将 `(module)` 替换为具体的命令名称。然后相关信息就被输出，包括可用算法、选项、所需文件格式、已知的 bugs 和限制等。对 GROMACS 新用户来说，调用常用命令的 help 信息是一种很好的学习方式。
 
-### 溶菌酶
+### 生成溶菌酶的拓扑文件
 
 首先我们要下载溶菌酶（Lysozyme）的蛋白质结构文件。本教程我们使用鸡蛋清溶菌酶（PDB 1AKI）。到 [RCSB](https://www.rcsb.org/) 下载晶体结构的 PDB 文件。
 
@@ -88,10 +89,41 @@ From '/usr/local/share/gromacs/top':
 15: OPLS-AA/L all-atom force field (2001 aminoacid dihedrals)
 ```
 
+力场的选择非常重要。这里我们选择 all-atom OPLS 力场，因此输入 15，然后回车。`pdb2gmx` 有很多选项，常用的包括：
 
+- `-ignh`：忽略 PDB 文件中的氢原子，对 NMR 结构特别有用。否则，如果有氢原子，则氢原子格式必须满足 GROMACS 力场。由于存在不同的惯例，因此处理 H 原子可能很令人头疼。如果需要保留初始 H 原子坐标，但需要重命名，则可以使用 Linux 的 `sed` 命令。
+- `-ter`：以交互的方式为 N 端和 C 端分配电荷状态。
+- `-inter`：以交互的方式为 Glu, Asp, Lys, Arg 和 His 分配电荷状态；选择与二硫键相关的 Cys。
 
+运行后，会生成三个文件：1AKI_processed.gro，posre.itp 和 topol.top：
 
-可以用 SPDBV 
+- 1AKI_processed.gro 是 GROMACS 格式的结构文件，包含力场中定义的所有原子；
+- topol.top 是系统拓扑文件；
+- posre.itp 包含用于限制重原子位置的信息。
+
+最后说明一点，许多用户以为 .gro 文件是必须的，这不对。GROMACS 可以处理许多不同的文件格式，.gro 只是写入坐标文件命令的默认选项。.gro 格式非常紧凑，但精度有限。如果你喜欢用 PDB 格式，只需要将 .pdb 作为输出文件的扩展名。`pdb2gmx` 的目的是生成符合力场的拓扑文件，输出的结构文件只是其副产物。
+
+### 检查拓扑文件
+
+让我们看看输出的拓扑文件 `topl.top` 里面有什么。使用纯文本编辑器打开。跳过注释行（以 ; 开头），第一行为：
+
+```txt
+#include "oplsaa.ff/forcefield.itp"
+```
+
+这一行调用了 OPLS-AA 力场的参数。它在文件开头，表明后续所有参数都源自此力场。下一个重要的内容是 `[ moleculetype ]`，如下：
+
+```txt
+[ moleculetype ]
+; Name            nrexcl
+Protein_chain_A     3
+```
+
+其中：
+
+- "Protein_chain_A" 为分子名称，说明这个蛋白在 PDB 文件中被标记为 chain A。
+- 3 表示
+
 
 ## 参考
 

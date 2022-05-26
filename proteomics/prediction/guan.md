@@ -1,4 +1,4 @@
-# Prediction of LC-MS/MS Properties of Peptides from Sequence by Deep Learning
+# 使用深度学习从肽段序列预测肽段的 LC-MS/MS 属性
 
 2022-02-07, 19:18
 ***
