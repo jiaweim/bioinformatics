@@ -4,6 +4,10 @@
 
 - [pdb2gmx](commands/pdb2gmx.md)
 
+## GROMACS 教程
+
+- [1. 水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
+
 ## 参考
 
 - https://www.gromacs.org/
