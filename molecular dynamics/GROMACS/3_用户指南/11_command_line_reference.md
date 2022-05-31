@@ -19,6 +19,7 @@ GROAMCS 包含许多用于准备、运行和分析分子动力学模拟的工具
 
 |命令|功能|
 |---|---|
+|[gmx mdrun](../commands/gmx_mdrun.md)|进行模拟、简正分析或能量最小化|
 
 - [gmx grompp](../commands/gmx_grompp.md)
 
