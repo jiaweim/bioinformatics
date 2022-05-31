@@ -8,6 +8,7 @@
 - [蛋白的展现形式](show.md)
 - [导出](export.md)
 - [对象管理](object_manage.md)
+- [选择语法](tutorial/select_algebra.md)
 
 ## 命令
 
@@ -15,6 +16,10 @@
 - [下载蛋白 - Fetch](cmd_fetch.md)
 - [名称操作](pymol_name.md)
 - [删除原子](commands/remove.md)
+
+### 文件操作
+
+- [保存](commands/save.md)
 
 ## 任务
 

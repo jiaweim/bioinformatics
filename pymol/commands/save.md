@@ -1,7 +1,7 @@
 # save
 
 2022-05-25, 12:55
-***
+****
 
 ## 简介
 
@@ -27,6 +27,12 @@ save A_aligned_with_B.aln, A_on_B
 save file [,(selection) [,state [,format]] ]
 ```
 
+说明：
+
+- 如果保存为 session 文件，则 "state" 无效
+- 默认 `state=-1`，表示保存当前状态
+- `state=0` 表示输出所有状态，如果包含多个状态，则输出的 PDB 文件会包含多状态。
+
 ## 示例
 
 - 只保存 alpha 碳
@@ -35,6 +41,17 @@ save file [,(selection) [,state [,format]] ]
 save onlyCAs.pdb, n. CA
 ```
 
+- 保存 MD trajectory file to disk
+
+```sh
+save myTraj.pdb, myMDTrajectory, state=0
+```
+
+- 保存 PyMOL session
+
+```sh
+save thisSession.pse
+```
 
 ## 参考
 

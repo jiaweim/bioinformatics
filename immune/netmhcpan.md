@@ -1,5 +1,9 @@
 # NetMHCpan
 
+2022-05-31, 10:18
+@author Jiawei Mao
+***
+
 ## 安装
 
 1. 解压文件
@@ -75,21 +79,29 @@ netMHCpan -p test.pep > test.pep.myout
 netMHCpan test.fsa > test.fsa.myout
 ```
 
+- 例 3
+
+通过全序列的 MHC 指定 MHC 类型
+
 ```sh
 netMHCpan -hlaseq B0702.fsa -p test.pep > test.pep_userMHC.myout
 ```
+
+- 例 4
+
+输出 binding affinity 预测结果
 
 ```sh
 netMHCpan -p test.pep -BA > test.pep_BA.out
 ```
 
-- 例 3
+- 例 5
 
 ```sh
 netMHCpan -p test.pep -BA -xls -a HLA-A01:01,HLA-A02:01 -xlsfile my_NetMHCpan_out.xls
 ```
 
-- 例 4
+- 例 6
 
 预测 FASTA 文件所有蛋白，肽段长度为 8-14，所有猪表位，输出 xls 格式。
 
