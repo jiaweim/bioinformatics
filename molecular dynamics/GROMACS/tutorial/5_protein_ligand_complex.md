@@ -6,8 +6,11 @@
   - [准备配体拓扑](#准备配体拓扑)
     - [为 JZ4 添加氢原子](#为-jz4-添加氢原子)
     - [使用 CGenFF 生成 JZ4 拓扑](#使用-cgenff-生成-jz4-拓扑)
+    - [构建复合物](#构建复合物)
+    - [构建拓扑](#构建拓扑)
   - [定义溶剂盒子并添加水分子](#定义溶剂盒子并添加水分子)
   - [添加离子](#添加离子)
+  - [能量最小化](#能量最小化)
   - [参考](#参考)
 
 2022-05-30, 13:46
@@ -24,28 +27,48 @@
 
 首先下载蛋白质的结构文件，T4 溶菌酶 L99A/M102Q 的 PDB 号为 3HTB。下载后，可以用 VMD, Chimera, PyMOL 等可视化软件查看结构。
 
-在开始模拟前，需要移除结构中的结晶水、PO4 和 BME 等，注意这个过程非普遍适用，有些活性位点的水分子就不应该移除。对我们要进行的模拟，不需要结晶水和其它分子，只需要保留配体 "JZ4"，即 2-丙基苯酚。去除这些分子后，将其保存为文件 3HTB_clean.pdb。
+在开始模拟前，需要移除结构中的结晶水、PO4 和 BME 等，注意这个过程非普遍适用，有些活性位点的水分子就不应该移除。对我们要进行的模拟，不需要结晶水和其它分子，只需要保留配体 "JZ4"，即 2-丙基苯酚。去除这些分子后，将其保存为文件 3HTB_clean.pdb。使用 PyMOL 获得该文件的操作：
 
-我们现在面临的问题是，没有可以识别 JZ4 配体的 GROMACS 力场，因此 `pdb2gmx` 会报错。只有在力场的残基拓扑文件（.rtp, residue topology）中包含构建项，才能自动组成为拓扑。由于缺乏配体项，我们分两步来准备该体系的拓扑：
+```sh
+remove sol. # 去除水分子
+select resn BME or resn PO4 # 选择 BME 和 PO4
+remove %sele # 删除 BME 和 PO4
+saven 3htb_clean.pdb # 保存文件
+```
+
+现在要解决的问题是，没有可以识别 JZ4 配体的 GROMACS 力场，因此 `pdb2gmx` 会报错。只有在力场的残基拓扑文件（.rtp, residue topology）中包含所有构建项，才能自动组成拓扑。由于缺乏配体项，因此我们分两步来准备该体系的拓扑：
 
 1. 使用 `pdb2gmx` 准备蛋白质拓扑
 2. 使用外部工具准备配体拓扑
 
-由于我们是分别准备这两个拓扑，因此需要将蛋白和 JZ4 配体保存为两个单独的 pdb 文件。保存 JZ4 坐标：
+由于要分别准备这两个拓扑，因此需要将蛋白和 JZ4 配体保存为两个单独的 pdb 文件。使用 grep 保存 JZ4 坐标：
 
 ```sh
 grep JZ4 3HTB_clean.pdb > jz4.pdb
 ```
 
-然后，从 3HTB_clean.pdb 中删除包含 JZ4 的行。本教程使用 CHARMM36 力场，从 [MacKerell 实验室网站](http://mackerell.umaryland.edu/charmm_ff.shtml#gromacs) 下载。在这里，下载最新的 CHARMM36 力场压缩包和 "cgenff_charmm2gmx.py" 转换脚本。 
+我比较喜欢用 PyMOL，PyMOL 的操作为：
 
-解压力场文件：
+```sh
+save jz4.pdb, r. JZ4
+```
+
+然后删除 JZ4 后就获得纯蛋白 PDB 文件：
+
+```sh
+remove r. JZ4
+save 3HTB_clean.pdb
+```
+
+本教程使用 CHARMM36 力场，从 [MacKerell 实验室网站](http://mackerell.umaryland.edu/charmm_ff.shtml#gromacs) 下载。下载最新的 CHARMM36 力场压缩包和 "cgenff_charmm2gmx.py" 转换脚本（后面会用到这个脚本）。 
+
+在工作目录解压力场文件：
 
 ```sh
 tar -zxvf charmm36-mar2019.ff.tgz
 ```
 
-此时有了 "charmm36-mar2019.ff" 子目录。使用 `pdb2gmx` 输出 T4 溶菌酶的拓扑：
+生成 "charmm36-mar2019.ff" 目录。使用 `pdb2gmx` 输出 T4 溶菌酶的拓扑：
 
 ```sh
 gmx pdb2gmx -f 3HTB_clean.pdb -o 3HTB_processed.gro
@@ -75,15 +98,15 @@ From '/usr/local/gromacs/share/gromacs/top':
 16: OPLS-AA/L all-atom force field (2001 aminoacid dihedrals)
 ```
 
-选择 CHARMM36 力场（1）。
-
-对水模型，选择默认的（1）。
+选择 CHARMM36 力场（1），默认的水模型（1）。
 
 ## 准备配体拓扑
 
-现在开始处理配体。但是从哪里获取处理力场无法自动识别的分子的力场参数呢？处理配体是分子模拟中最具挑战性的任务之一。所用的力场是研究人员花费数年时间获得的自洽力场，在这个框架中引入一个新的物种并不容易。新物种的力场参数必须以与原始力场一致的方式进行推导和验证。对 OPLS、AMBER 和 CHARMM 力场，一般采用量子力学计算的方式推导。这些力场的相关文献一般描述了所需过程。对 GROMOS 力场，参数化方法不是很清楚，依赖于凝聚相行为的经验拟合。即，计算每种原子类型的初始电荷和 Lennard-Jones 参数，评估其准确性，并进行细化。虽然最终的结果令人满意，其流体行为与现实中相似，但其推导过程很费力。
+现在开始处理配体，从哪里获得力场无法自动识别的分子的力场参数呢？处理配体是分子模拟中最具挑战性的任务之一。力场是研究人员花费数年时间获得的自洽力场，在已有框架中引入一个新物种并不容易。新物种的力场参数必须以与原始力场一致的方式进行推导和验证。
 
-出于这个原因，大家首选自动化工具。对每个力场，都有一些方法或软件声称能给出与力场兼容的参数。并不是所有都准确，下面是一些示例：
+对 OPLS、AMBER 和 CHARMM 力场，一般采用量子力学计算的方式推导。这些力场的原始文献一般详细描述了推导过程。GROMOS 力场则比较麻烦，参数是根据凝聚相行为的经验拟合获得。即计算每种原子类型的初始电荷和 Lennard-Jones 参数，评估其准确性，并进行细化。最终的结果也令人满意，其流体行为与现实世界中的流体相似，但其推导过程很费力。
+
+因此，大家首选自动化工具。对每个力场，都有一些方法或软件声称能给出与力场兼容的参数，虽然不一定准确，下面是一些示例：
 
 |力场|工具|说明|
 |---|---|---|
@@ -98,7 +121,11 @@ From '/usr/local/gromacs/share/gromacs/top':
 
 ### 为 JZ4 添加氢原子
 
-在本教程，我们使用 CGenFF 服务器生成 JZ4 拓扑。点开上面的 CGenFF 链接，注册账户（免费）并激活。CGenFF 需要 Sybyl .mol2 文件作为输入，用于收集原子类型和键合连接信息。CHARMM 是一个全原子力场，意味着所有 H 原子都有显式表示。晶体结构通常不指定 H 坐标，因此需要内部构建。使用 [Avogadro](https://two.avogadro.cc/) 程序生成 .mol2 文件并添加 H 原子。用 Avogadro 打开 jz2.pdb 文件，在 "Build" 菜单，选择 "Add Hydrogens"，Avogadro 会自动在 JZ4 配体上构建所有 H 原子。保存为 .mol2 文件（File -> Save As..., choose Sybyl Mol2），命名为 jz2.mol2.
+在本教程，我们使用 CGenFF 服务器生成 JZ4 拓扑。点开 [CGenFF](https://cgenff.umaryland.edu/) 链接，注册账户（免费）并激活。
+
+CGenFF 需要 Sybyl .mol2 文件作为输入，用于收集原子类型和键合连接信息。CHARMM 是一个全原子力场，意味着所有 H 原子都有显式表示。而晶体结构通常不指定 H 坐标，因此需要内部构建。
+
+使用 [Avogadro](https://two.avogadro.cc/) 程序生成 .mol2 文件并添加 H 原子：用 Avogadro 打开 jz4.pdb 文件，在 "Build" 菜单，选择 "Add Hydrogens"，Avogadro 会自动在 JZ4 配体上构建所有 H 原子。保存为 .mol2 文件（File -> Save As..., choose Sybyl Mol2），命名为 jz4.mol2.
 
 需要稍微修改 jz4.mol2 才能用。用文本编辑器打开 jz4.mol2 文件：
 
@@ -204,16 +231,128 @@ perl sort_mol2_bonds.pl jz4.mol2 jz4_fix.mol2
 
 现在准备好 jz4_fix.mol2 文件用于生成拓扑。访问 CGenFF 服务器，登录后，点击 "Upload molecule" 上传文件。CGenFF 服务器会迅速生成 CHARMM "stream" 格式的（.str）的拓扑。将其保存为 "jz4.str" 文件，这里有一个[转好的文件](http://www.mdtutorials.com/gmx/complex/Files/jz4.str)。
 
-CHARMM stream 文件包含所有的拓扑信息，原子类型、电荷和键合信息。它还包括针对其它键合参数的部分，用于力场未涵盖的其它内部相互作用。CGenFF 还为每个参数提供了惩罚参数，可用于评估参数的可靠性。低于 10 表示可靠，可直接使用；10-50 表示需要对拓扑进一步验证；大于 50 表示需要重新手动参数化。这个惩罚打分是 CGenFF 服务器最重要的功能之一。许多其它的服务器都是黑匣子，用户只能无条件信任。将你的研究项目压在一个不经过验证的自动化程序上是非常危险的。不好的配体拓扑会导致浪费大量时间获得不可靠的结果。应该验证新参数物种的拓扑，至少要对照力场中现有的部分，检查分配给配体的电荷和原子类型是否正确。
+CHARMM stream 文件包含原子类型、电荷和键合信息等需要的所有拓扑信息。它还包括一些附加键合参数部分，是通过类比产生用于力场未涵盖的其它内部相互作用。CGenFF 为每个参数提供了用于评估参数可靠性惩罚打分：
+
+- 低于 10 表示可靠，可直接使用；
+- 10-50 表示需要对拓扑进一步验证；
+- 大于 50 表示不可用，需要重新手动参数化。
+
+这个惩罚打分是 CGenFF 服务器最重要的功能之一。许多其它的服务器生成拓扑都是黑匣子，用户只能无条件信任。将研究项目押在一个未经验证的自动化程序上就很不靠谱。不好的配体拓扑会导致浪费大量时间获得的结果还不可靠。对新参数化物种的拓扑要仔细验证，至少要对照力场中现有的部分，检查分配给配体的电荷大小和原子类型是否正确。
 
 检查 jz4.str 的内容，查看电荷和新的二面角参数的惩罚值。所有这些值都很低，表明该拓扑质量很好，可直接用于我们的模拟。
 
-使用下载的 cgenff_charmm2gmx.py 脚本将 CHARMM stream 格式转换为 GROMACS 格式。执行转换：
+使用下载的 cgenff_charmm2gmx.py 脚本将 CHARMM stream 格式转换为 GROMACS 格式：
 
 ```sh
 python cgenff_charmm2gmx.py JZ4 jz4_fix.mol2 jz4.str charmm36-mar2019.ff
 ```
 
+配体引入了新的键合参数，这些参数写入了 `jz4.prm` 文件。配体拓扑写入了 `jz4.itp` 文件，其中包含配体的 `[ moleculetype ]` 定义。
+
+### 构建复合物
+
+现在已有 `pdb2gmx` 生成的包含兼容力场的蛋白质结构 `3HTB_processed.gro` ，同时有 cgenff_charmm2gmx.py 生成的兼容 JZ4 拓扑的结构 `jz4_ini.pdb`。使用 `editconf` 将该 pdb 转换为 .gro：
+
+```sh
+gmx editconf -f jz4_ini.pdb -o jz4.gro
+```
+
+将 `3HTB_processed.gro` 复制到要操作的新文件，如 `complex.gro`，然后将 jz4.gro 中的坐标部分复制进去，放在蛋白质原子的最后一行，盒子向量之前：
+
+```sh
+163ASN      C 1691   0.621  -0.740  -0.126
+163ASN     O1 1692   0.624  -0.616  -0.140
+163ASN     O2 1693   0.683  -0.703  -0.011
+  5.99500   5.19182   9.66100   0.00000   0.00000  -2.99750   0.00000   0.00000   0.00000
+```
+
+修改后：
+
+```sh
+163ASN      C 1691   0.621  -0.740  -0.126
+163ASN     O1 1692   0.624  -0.616  -0.140
+163ASN     O2 1693   0.683  -0.703  -0.011
+1JZ4     C4    1   2.429  -2.412  -0.007
+1JZ4     C7    2   2.155  -2.721  -0.411
+1JZ4     C8    3   2.207  -2.675  -0.533
+1JZ4     C9    4   2.267  -2.551  -0.545
+1JZ4    C10    5   2.277  -2.473  -0.430
+1JZ4    C11    6   2.169  -2.646  -0.295
+1JZ4    C12    7   2.229  -2.519  -0.308
+1JZ4    C13    8   2.246  -2.441  -0.181
+1JZ4    C14    9   2.392  -2.470  -0.139
+1JZ4    OAB   10   2.341  -2.354  -0.434
+1JZ4     H1   11   2.531  -2.436   0.015
+1JZ4     H2   12   2.366  -2.453   0.069
+1JZ4     H3   13   2.417  -2.306  -0.010
+1JZ4     H4   14   2.107  -2.812  -0.407
+1JZ4     H5   15   2.199  -2.735  -0.617
+1JZ4     H6   16   2.304  -2.518  -0.635
+1JZ4     H7   17   2.137  -2.681  -0.204
+1JZ4     H8   18   2.178  -2.476  -0.106
+1JZ4     H9   19   2.227  -2.337  -0.193
+1JZ4    H10   20   2.458  -2.429  -0.214
+1JZ4    H11   21   2.402  -2.577  -0.131
+1JZ4    H12   22   2.374  -2.321  -0.516
+5.99500   5.19182   9.66100   0.00000   0.00000  -2.99750   0.00000   0.00000   0.00000
+```
+
+### 构建拓扑
+
+在体系中包含 JZ4 配体的参数非常容易，只需要在 `topol.top` 文件位置约束位置插入 `#include "jz4.itp"`。插入前：
+
+```top
+; Include Position restraint file
+#ifdef POSRES
+#include "posre.itp"
+#endif
+
+; Include water topology
+#include "./charmm36-mar2019.ff/tip3p.itp"
+```
+
+插入后：
+
+```top
+; Include Position restraint file
+#ifdef POSRES
+#include "posre.itp"
+#endif
+
+; Include ligand topology
+#include "jz4.itp"
+
+; Include water topology
+#include "./charmm36-mar2019.ff/tip3p.itp"
+```
+
+配体引入了新的二面角参数，由 cgenff_charmm2gmx.py 脚本写入 "jz4.prm" 文件。在 `topol.top` 的顶部，插入 `#include` 语法添加参数：
+
+```top
+; Include forcefield parameters
+#include "./charmm36-mar2019.ff/forcefield.itp"
+
+; Include ligand parameters
+#include "jz4.prm"
+
+[ moleculetype ]
+; Name            nrexcl
+Protein_chain_A     3
+```
+
+插入 `#include` 语句的位置非常重要，它必须在 `[ moleculetype ]` 前面，在 parent 力场的 `#include` 语句后面。
+
+最后修改一下 `[ molecules]` 部分。为了说明 `complex.gro` 新添加了一个分子，需要添加如下部分：
+
+```sh
+[ molecules ]
+; Compound        #mols
+Protein_chain_A     1
+JZ4                 1
+```
+
+此时拓扑和坐标文件与体系内容一致。
+ 
 ## 定义溶剂盒子并添加水分子
 
 这一步和其它 MD 模拟一样，定义盒子并填充水分子：
@@ -228,12 +367,42 @@ gmx solvate -cp newbox.gro -cs spc216.gro -p topol.top -o solv.gro
 
 ![](images/2022-05-30-16-46-00.png)
 
-GROMACS 会始终使用坐标的最有效的数值表示，即将所有内容重新包装成三斜晶胞单元。`mdrun` 执行的物理计算可以在不同的坐标系下等效进行，因此推荐使用最有效的方法。在生成 tpr 文件后，可以恢复所需的晶胞形状。
+GROMACS 使用坐标的最有效的数值表示，即将所有坐标重新包装成三斜晶胞单元。`mdrun` 执行的物理计算可以在不同的坐标系下等效进行，因此推荐使用最有效的方法。在生成 tpr 文件后，可以恢复所需的晶胞形状。
 
 ## 添加离子
 
-使用 `ion`
+现在已经有一个含有带电蛋白质的溶剂化体系。`pdb2gmx` 的输出告诉我们蛋白质的净电荷为 +6e。由于生命系统不存在净电荷，因此我们必须添加离子以中和电荷。
 
+使用 `grompp` 基于 mdp 文件生成 .tpr 文件。这里用运行能量最小化的 .mdp 文件，因为它的参数最少，很容易维护。[示例](http://www.mdtutorials.com/gmx/complex/Files/ions.mdp)：
+
+```sh
+gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
+```
+
+然后用 `genion` 添加离子：
+
+```sh
+gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral
+```
+
+此时的 `[ molecules ]`：
+
+```top
+[ molecules ]
+; Compound        #mols
+Protein_chain_A     1
+JZ4                 1
+SOL             10228
+CL                  6
+```
+
+## 能量最小化
+
+已经获得了电中性的溶剂化体系，下面做能量最小化。先用这个[参数文件](http://www.mdtutorials.com/gmx/complex/Files/em.mdp) 生成 tpr 文件：
+
+```sh
+gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+```
 
 ## 参考
 

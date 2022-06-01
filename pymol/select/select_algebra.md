@@ -87,11 +87,15 @@ PyMOL>show spheres, solvent and chain A
 |S1 around 12.3|a.|原子的中心与 S1 中任意原子的中心在 12.3 内|
 |S1 expand 12.3|x.|原子的中心与 S1 中任意原子的中心在 12.3 内的原子，包括 S1|
 |S1 gap 1.2||与 S1 的 VDW 半径至少为 1.2A 的原子|
-|S1 near_to 12.3 of S2|nto.|同 `within`，
+|S1 near_to 12.3 of S2|nto.|同 `within`，但是排除 S2|
+|S1 beyond 12.3 of S2|S1 中与 S2 至少 12.3A 远的原子|
 |**属性**|||
 |partial_charge < 1.2|pc.||
+|formal_charge = 1|fc.||
+|b < 100.0||B-factor 小于 100.0|
 |elem C|e.|元素 C （碳）的所有原子|
-
+|**化学类**|||
+|
 
 ## select
 

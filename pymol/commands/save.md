@@ -35,7 +35,7 @@ save file [,(selection) [,state [,format]] ]
 
 ## 示例
 
-- 只保存 alpha 碳
+- 选择 alpha 碳导出
 
 ```sh
 save onlyCAs.pdb, n. CA
