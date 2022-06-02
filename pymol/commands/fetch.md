@@ -15,7 +15,11 @@
 fetch codes [, name [, state [, finish [, discrete [, multiplex [, zoom [, type [, async ]]]]]]]]
 ```
 
-`fetch` 命令根据 PDB ID 下载蛋白质结构到工作路径，并载入到 PyMOL 显示，在 PyMOL 中 object 的名字默认为 PDB ID，可通过 `name` 参数进行修改。
+`fetch` 从 PDB 检索蛋白结构，并加载入到 PyMOL 中。下载的PDB 文件保存在 [fetch_path](../settings/fetch_path.md) 中，默认为 PyMOL 的当前工作目录。
+
+
+
+在 PyMOL 中 object 的名字默认为 PDB ID，可通过 `name` 参数进行修改。
 
 从 PyMOL 1.8 开始，默认下载的格式为 cif，可通过 `type` 参数修改文件格式。
 

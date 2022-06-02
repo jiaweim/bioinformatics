@@ -59,6 +59,18 @@ screen -d name
 screen -d -r name
 ```
 
+- 如果只有一个 session，直接删除，否则提示选择 session 删除
+
+```sh
+screen -X quit
+```
+
+- 删除指定会话
+
+```sh
+screen -X -S session_name quit
+```
+
 ## 创建 Windows
 
 ### Screen 命令
