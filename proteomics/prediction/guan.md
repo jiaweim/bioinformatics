@@ -51,9 +51,9 @@
 
 ### 数据来源
 
-**iRT 数据**由 HeLa 和 HEK293 细胞裂解液进行三次 DIA 技术重复获得，柱长 1m，采集时间 4h。鉴定假阳性控制在 1%，将重复鉴定的肽段和不同电荷的肽段汇总，使用汇总的 iRT 的中位数。肽段长度要求不大于 40，iRT 模型总的肽段数为 125,793，随机选择其中 10% 作为测试集，余下 90% 作为 iRT 模型的训练集。
+**iRT 数据** 用于训练 iRT 模型的数据。HeLa 和 HEK293 细胞裂解液样品进行三次 DIA 技术重复获得，柱长 1m，采集时间 4h。鉴定假阳性 1%，将重复鉴定的肽段（包括不同电荷）使用总体 iRT 的中位数。去掉肽段长度大于 40 的结果，iRT 模型总的肽段数为 125,793，随机选择 10% 作为测试集，余下 90% 作为训练集。
 
-**电荷状态分布数据**：电荷状态分布模型是从 ProteomeExchange 下载的 DDA 数据。这些数据包括 0.5-4h 单针数据和高 pH 分级样本数据。使用 PAVA （一个 Visual Basic 程序）将raw 数据文件导出为 peak list。使用 MSGF+ 搜索二级谱，蛋白质序列库采用 human proteome (UP000005640)，包含 71,778 条序列（下载时间 20180206）。Trypsin 最大漏切数设为 5，Cys 固定修饰 carbamidomethylation，Met 可变修饰 oxidation，肽段 N-端 glutamine 可变修饰 pyro-glu，蛋白 N-端可变修饰 acetylation，Glu 和 Asp 的 deamidation 可变修饰。母离子 tolerance 10 ppm，仪器设置为 "Q Exactive"。将 peptide EValue 阈值设置为 0.045，获得 1% 的肽段 FDR。
+**价态分布数据**：价态分布模型的数据是从 ProteomeExchange 下载的 DDA 数据。这些数据包括 0.5-4h 单针数据和高 pH 分级样本数据。使用 PAVA （一个 Visual Basic 程序）将raw 数据文件导出为 peak list。使用 MSGF+ 搜索二级谱，蛋白质序列库采用 human proteome (UP000005640)，包含 71,778 条序列（下载时间 20180206）。Trypsin 最大漏切数设为 5，Cys 固定修饰 carbamidomethylation，Met 可变修饰 oxidation，肽段 N-端 glutamine 可变修饰 pyro-glu，蛋白 N-端可变修饰 acetylation，Glu 和 Asp 的 deamidation 可变修饰。母离子 tolerance 10 ppm，仪器设置为 "Q Exactive"。将 peptide EValue 阈值设置为 0.045，获得 1% 的肽段 FDR。
 
 
 
