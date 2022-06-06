@@ -48,7 +48,7 @@ shell 是一个程序，它从键盘接受输入的命令，然后把命令传�
 Sun Jun  5 22:17:34 EDT 2022
 ```
 
-- 显示当前月份的日历
+- 显示当前月份的日历 [cal](../command/cal.md)
 
 ```sh
 [root@localhost home]# cal
