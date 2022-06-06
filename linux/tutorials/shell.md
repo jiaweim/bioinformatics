@@ -10,7 +10,7 @@
   - [参考](#参考)
 
 2022-06-06, 10:03
-***
+****
 
 ## 简介
 
@@ -61,7 +61,7 @@ Su Mo Tu We Th Fr Sa
 26 27 28 29 30
 ```
 
-- 查看磁盘剩余空间
+- 查看磁盘剩余空间 [df](../command/df.md)
 
 ```sh
 [root@localhost home]# df
@@ -82,7 +82,7 @@ tmpfs                      52774736          0    52774736   0% /run/user/1006
 tmpfs                      52774736          0    52774736   0% /run/user/1005
 ```
 
-- 显示空闲内存
+- 显示空闲内存 [free](../command/free.md)
 
 ```sh
 [root@localhost home]# free

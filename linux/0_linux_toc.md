@@ -63,3 +63,4 @@
 - [Debian 参考手册](https://www.debian.org/doc/manuals/debian-reference/)
 - [Bash 参考手册](http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 - [GNU 手册](http://www.gnu.org/manual/manual.html)
+- [Linux 下载](https://www.linuxdown.com/)
