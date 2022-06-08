@@ -14,12 +14,4 @@
 		],
 		"description": "add current date time"
 	},
-	"info":{
-		"scope": "",
-		"prefix": ["info", "if"],
-		"body": [
-
-		],
-	}
-	
 }
