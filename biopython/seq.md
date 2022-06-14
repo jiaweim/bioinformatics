@@ -2,6 +2,7 @@
 
 - [Seq](#seq)
   - [简介](#简介)
+  - [类似字符串](#类似字符串)
   - [转换为字符串](#转换为字符串)
   - [转录](#转录)
   - [方法](#方法)
@@ -14,6 +15,26 @@
 ## 简介
 
 Biopython 使用 `Seq` 对象包装序列。`SeqRecord` 在 `Seq` 的基础上添加了注释信息。
+
+序列本质上是类似 `AGTACACTGGT` 的字符串，`Seq` 对象和 Python 字符串最重要的区别是它们具有不同的方法。虽然 `Seq` 对象的许多方法与 Python 字符串的方法相同，但它还有一些特有方法，如 `translate()` 进行翻译，`reverse_complement()` 反向互补等。
+
+## 类似字符串
+
+大多数情况，可以像处理 Python 字符串一样处理 `Seq` 对象，例如：
+
+```py
+>>> from Bio.Seq import Seq
+>>> my_seq = Seq("GATCG")
+>>> for index, letter in enumerate(my_seq):
+...     print("%i %s" % (index, letter))
+0 G
+1 A
+2 T
+3 C
+4 G
+>>> print(len(my_seq))
+5
+```
 
 ## 转换为字符串
 

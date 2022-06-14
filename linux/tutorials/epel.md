@@ -5,8 +5,13 @@
 
 ## 简介
 
-启用 EPEL 项目，是因为许多 Fedora 贡献者希望在 Red Hat Enterprise Linux (RHEL)及其兼容衍生产品上使用他们维护的 Fedora 包。
+EPEL（Extra Packages for Enterprise Linux），由 Fedora 社区打造，为 RHEL（ Red Hat Enterprise Linux）及其衍生发行版，如 CentOS, Scientific Linux 等提供高质量的软件包。装上 EPEL 后，相当于添加了一个第三方源。
 
-### EPEL 目标
+CentOS 源包含的大多数的库都比较旧，很多流行的库都没有，EPEL 不仅全，而且新。
 
+## 安装 EPEL
+
+```sh
+yum install -y epel-release
+```
 
