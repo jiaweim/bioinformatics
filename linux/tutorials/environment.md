@@ -1,5 +1,13 @@
 # 环境
 
+- [环境](#环境)
+  - [简介](#简介)
+  - [检查环境变量](#检查环境变量)
+  - [常见环境变量](#常见环境变量)
+  - [把可执行文件添加到环境变量](#把可执行文件添加到环境变量)
+
+***
+
 ## 简介
 
 shell 在环境中存储了两种基本类型的数据局：
@@ -46,7 +54,6 @@ SELINUX_ROLE_REQUESTED=
 TERM=xterm
 SHELL=/bin/bash
 HISTSIZE=1000
-SSH_CLIENT=10.20.84.251 3621 22
 PERL5LIB=/opt/rh/devtoolset-7/root//usr/lib64/perl5/vendor_perl:/opt/rh/devtoolset-7/root/usr/lib/perl5:/opt/rh/devtoolset-7/root//usr/share/perl5/vendor_perl
 SELINUX_USE_CURRENT_RANGE=
 SSH_TTY=/dev/pts/0
@@ -66,11 +73,78 @@ PYTHONPATH=/opt/rh/devtoolset-7/root/usr/lib64/python2.7/site-packages:/opt/rh/d
 LOGNAME=root
 XDG_DATA_DIRS=/root/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
 SSH_CONNECTION=10.20.84.251 3621 10.20.19.147 22
-LESSOPEN=||/usr/bin/lesspipe.sh %s
 INFOPATH=/opt/rh/devtoolset-7/root/usr/share/info
 XDG_RUNTIME_DIR=/run/user/0
 DISPLAY=localhost:10.0
-_=/usr/bin/printenv
 ```
 
-上面列出的是环境变量及其数值列表。
+上面列出的是环境变量及其数值列表。上面的 `USER` 变量，表示当前用户。
+
+- `printenv` 也能够列出特定变量的数值
+
+```sh
+[root@localhost ~]# printenv USER
+root
+```
+
+- 使用无选项和参数的 `set` 命令，显示 shell 变量、环境变量和定义的 shell 函数
+
+与 `printenv` 不同，set 命令的输出按首字母顺序排列
+
+```sh
+set
+```
+
+- 也可以使用 `echo` 命令来查看变量内容
+
+```sh
+[root@localhost ~]# echo $HOME
+/root
+```
+
+别名无法用 `set` 或 `printenv` 查看，可以用 `alias` 查看别名：
+
+```sh
+[root@localhost ~]# alias
+alias cp='cp -i'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+```
+
+## 常见环境变量
+
+|变量|内容|
+|---|---|
+|DISPLAY|如果正在运行图形界面环境，该变量为显示器名字。通常为 ":0"，意思是由 X 的第一个显示器|
+|EDITOR|文本编辑器名称|
+|SHELL|shell 程序名称|
+|HOME|用户家目录|
+|LANG|字符集以及语言编码方式。|
+|OLD_PWD|先前的工作目录|
+|PAGER|页输出程序的名字。这经常设置为/usr/bin/less|
+|PATH|由冒号分开的目录列表，当你输入可执行程序名后，会搜索这个目录列表|
+|PS1|Prompt String 1. 定义 shell 提示符的内容。随后我们可以看到，这个变量内容可以定制|
+|PWD|当前工作目录|
+|TERM|终端类型名。类 Unix 系统支持许多终端协议；该变量指定终端仿真器所用的协议|
+|TZ|所在时区。大多数类 Unix 系统使用 UTC 时间，根据该变量指定的偏差来显示本地时间|
+|USER|用户名|
+
+## 把可执行文件添加到环境变量
+
+1. 创建软连接放到 `/usr/bin` 或 `/usr/sbin` 目录
+
+```sh
+ln -s /home/a/program /usr/bin/program
+```
+
+2. 添加到环境变量
+
+在 `/etc/profile` 后面添加：
+
+```sh
+PATH=/home/a/program
+```

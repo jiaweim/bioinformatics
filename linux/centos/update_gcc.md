@@ -1,5 +1,19 @@
 # CentOS 升级 gcc 版本
 
+- [CentOS 升级 gcc 版本](#centos-升级-gcc-版本)
+  - [简介](#简介)
+  - [查看当前 gcc 版本](#查看当前-gcc-版本)
+  - [升级到 gcc 6.3](#升级到-gcc-63)
+  - [升级到 gcc 7.3](#升级到-gcc-73)
+  - [升级到 gcc 8.3](#升级到-gcc-83)
+  - [升级到gcc 9.3](#升级到gcc-93)
+  - [重装](#重装)
+  - [参考](#参考)
+
+Last updated: 2022-06-15, 10:56
+@author Jiawei Mao
+***
+
 ## 简介
 
 CentOS 自带的编译器版本较老，许多较新的软件不支持，因此有更新编译器的需求。
@@ -89,6 +103,16 @@ scl enable devtoolset-9 bash
 如果要长期使用gcc 9.3的话：
 
 echo "source /opt/rh/devtoolset-9/enable" >>/etc/profile
+
+## 重装
+
+先卸载：
+
+```sh
+yum -y erase devtoolset-6-gcc devtoolset-6-gcc-c++ devtoolset-6-binutils 
+```
+
+然后安装上面的操作重新安装。
 
 ## 参考
 
