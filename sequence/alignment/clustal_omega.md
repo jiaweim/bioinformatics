@@ -2,6 +2,7 @@
 
 - [Clustal Omega](#clustal-omega)
   - [简介](#简介)
+  - [Linux 版本安装](#linux-版本安装)
   - [使用](#使用)
   - [命令说明](#命令说明)
     - [输入序列](#输入序列)
@@ -22,6 +23,12 @@ Clustal Omega （CO）是一个用于蛋白质、DNA 和 RNA 的通用多序列�
 在默认模式下，用户提供要比对的序列文件，CO 将这些序列聚类成一个引导树，并用该引导树指导序列的“渐进式”对齐。CO 还提供了对齐已有 alignments、序列和已有 alignment 对齐的工具。
 
 Clustal Omega 使用隐马尔可夫模型（HMM）作为比对引擎，使用 mBed 的增强版生成引导树，mBed 可以在 O(N*log(N)) 时间内聚类大量序列。然后使用 HHalign 根据引导树对越来越大的 alignment 进行对齐。
+
+## Linux 版本安装
+
+```sh
+yum install -y clustal-omega
+```
 
 ## 使用
 

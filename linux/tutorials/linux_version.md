@@ -7,7 +7,8 @@
   - [Debian](#debian)
   - [CentOS](#centos)
 
-2022-06-02, 10:19
+Last updated: 2022-06-15, 09:01
+@author Jiawei Mao
 ****
 
 ## 简介
@@ -26,10 +27,10 @@ Ubuntu, CentOS, Debian 则都属于免费发行版。
 
 包管理器用来在 Linux 系统上安装、卸载、升级和查询软件。目前主流的包管理器：
 
-|包管理器|标志性指令|代表系统|
-|---|---|---|
-|DPKG|dpkg, apt|Debian, Ubuntu|
-|RPM|rpm, yum|RedHat, CentOS|
+|底层工具|上层工具|代表系统|
+|---|---|---|---|---|
+|dpkg|apt-get, aptitude|Debian, Ubuntu|
+|rpm|yum|RedHat, CentOS|
 |Pacman|pacman|Arch, Manjaro|
 |DNF|dnf|Fedora|
 |Zypper|zypper|SUSE|
