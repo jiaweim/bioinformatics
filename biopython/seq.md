@@ -403,6 +403,8 @@ Seq('MKKMQSIVLALSLVLVAPMAAQAAEITLVPSVKLQIGDRDNRGYYWDGGHWRDH...HHR')
 
 Biopython 内部使用的翻译表派生自 [NCBI](https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi)。
 
+在 Genbank 文件中，在 CDS 中使用 `/transl_table` 指定翻译表。
+
 和前面一样，这里用标准翻译表和脊椎动物线粒体的翻译表演示。
 
 ```python
@@ -489,6 +491,8 @@ G | GTG V(s)| GCG A   | GAG E   | GGG G   | G
 >>> mito_table.forward_table["ACG"]
 'T'
 ```
+
+可以在 [Codon Usage Database](http://www.kazusa.or.jp/codon/) 查询物种使用的各个密码子的比例。
 
 ## 11. Seq 对象对比
 

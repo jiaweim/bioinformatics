@@ -7,6 +7,11 @@
     - [从文件到记录列表](#从文件到记录列表)
     - [提取数据](#提取数据)
     - [修改数据](#修改数据)
+  - [从压缩文件解析序列](#从压缩文件解析序列)
+  - [从网络解析序列](#从网络解析序列)
+    - [解析网络 GenBank 序列](#解析网络-genbank-序列)
+    - [解析网络 SwissPro 序列](#解析网络-swisspro-序列)
+  - [序列字典](#序列字典)
   - [输出序列文件](#输出序列文件)
     - [Round trips](#round-trips)
     - [序列格式转换](#序列格式转换)
@@ -14,12 +19,11 @@
     - [格式化字符串](#格式化字符串)
   - [支持的文件格式](#支持的文件格式)
 
+Last updated: 2022-06-21, 13:50
 @author Jiawei Mao
 ***
 
 ## 解析或读取序列
-
-Last updated: 2022-06-14, 13:25
 
 函数 `Bio.SeqIO.parse()` 读取序列数据，返回 `SeqRecord` 对象。该函数包含两个参数：
 
@@ -298,6 +302,166 @@ CGTAACAAGGTTTCCGTAGGTGAACCTGCGGAAGGATCATTGATGAGACCGTGGAATAAA
 CGATCGAGTGAATCCGGAGGACCGGTGTACTCAGCTCACCGGGGGCATTGCTCCCGTGGT
 GACCCTGATTTGTTGTTGGGCCGCCTCGGGAGCGTCCATGGCGGGT
 ```
+
+## 从压缩文件解析序列
+
+
+
+用 Python 的 `gzip` 模块打开压缩文件进行处理：
+
+```python
+>>> import gzip
+>>> from Bio import SeqIO
+>>> with gzip.open("ls_orchid.gbk.gz", "rt") as handle:
+...     print(sum(len(r) for r in SeqIO.parse(handle, "gb")))
+...
+67518
+```
+
+对 bzip2 格式可以用 `bz2` 模块：
+
+```python
+>>> import bz2
+>>> from Bio import SeqIO
+>>> with bz2.open("ls_orchid.gbk.bz2", "rt") as handle:
+...     print(sum(len(r) for r in SeqIO.parse(handle, "gb")))
+...
+67518
+```
+
+gzip 格式的变体 BGZF（Blocked GNU Zip Format）可以像谱图 gzip 文件一样读取，但是具有随机访问的优势。
+
+## 从网络解析序列
+
+> [!NOTE]
+> 虽然可以直接用 BioPython 解析网络数据，但还是建议下载保存为文件再处理。
+
+### 解析网络 GenBank 序列
+
+基本步骤：连接到 NCBI，使用 GI 编号从 GenBank 获取序列。
+
+首先，尝试下载一条记录。如果不需要注释信息，下载 FASTA 更好。因为只有一条序列，使用 `SeqIO.read()` 函数：
+
+```python
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email = "A.N.Other@example.com"
+with Entrez.efetch(
+    db="nucleotide", rettype="fasta", retmode="text", id="6273291"
+) as handle:
+    seq_record = SeqIO.read(handle, "fasta")
+print("%s with %i features" % (seq_record.id, len(seq_record.features)))
+```
+
+```txt
+gi|6273291|gb|AF191665.1|AF191665 with 0 features
+```
+
+在 NCBI 还可以选择其它格式：
+
+```python
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email = "A.N.Other@example.com"
+with Entrez.efetch(
+    db="nucleotide", rettype="gb", retmode="text", id="6273291"
+) as handle:
+    seq_record = SeqIO.read(handle, "gb")  # using "gb" as an alias for "genbank"
+print("%s with %i features" % (seq_record.id, len(seq_record.features)))
+```
+
+```txt
+AF191665.1 with 3 features
+```
+
+一次下载多条序列。用 `SeqIO.parse()` 解析：
+
+```python
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email = "A.N.Other@example.com"
+with Entrez.efetch(
+    db="nucleotide", rettype="gb", retmode="text", id="6273291,6273290,6273289"
+) as handle:
+    for seq_record in SeqIO.parse(handle, "gb"):
+        print("%s %s..." % (seq_record.id, seq_record.description[:50]))
+        print(
+            "Sequence length %i, %i features, from: %s"
+            % (
+                len(seq_record),
+                len(seq_record.features),
+                seq_record.annotations["source"],
+            )
+        )
+```
+
+```txt
+AF191665.1 Opuntia marenae rpl16 gene; chloroplast gene for c...
+Sequence length 902, 3 features, from: chloroplast Opuntia marenae
+AF191664.1 Opuntia clavata rpl16 gene; chloroplast gene for c...
+Sequence length 899, 3 features, from: chloroplast Grusonia clavata
+AF191663.1 Opuntia bradtiana rpl16 gene; chloroplast gene for...
+Sequence length 899, 3 features, from: chloroplast Opuntia bradtianaa
+```
+
+### 解析网络 SwissPro 序列
+
+从 ExPASy 解析单条序列：
+
+```python
+from Bio import ExPASy
+from Bio import SeqIO
+
+with ExPASy.get_sprot_raw("O23729") as handle:
+    seq_record = SeqIO.read(handle, "swiss")
+print(seq_record.id)
+print(seq_record.name)
+print(seq_record.description)
+print(repr(seq_record.seq))
+print("Length %i" % len(seq_record))
+print(seq_record.annotations["keywords"])
+```
+
+```txt
+O23729
+CHS3_BROFI
+RecName: Full=Chalcone synthase 3; EC=2.3.1.74; AltName: Full=Naringenin-chalcone synthase 3;
+Seq('MAPAMEEIRQAQRAEGPAAVLAIGTSTPPNALYQADYPDYYFRITKSEHLTELK...GAE')
+Length 394
+['Acyltransferase', 'Flavonoid biosynthesis', 'Transferase']
+```
+
+## 序列字典
+
+对自索引文件格式，如 twoBit，`SeqIO.parse` 返回值可以作为 dict 使用，即可以随机访问序列文件。例如：
+
+```python
+>>> from Bio import SeqIO
+>>> handle = open("sequence.bigendian.2bit", "rb")
+>>> records = SeqIO.parse(handle, "twobit")
+>>> records.keys()
+dict_keys(['seq11111', 'seq222', 'seq3333', 'seq4', 'seq555', 'seq6'])
+>>> records['seq222']
+SeqRecord(seq=Seq('TTGATCGGTGACAAATTTTTTACAAAGAACTGTAGGACTTGCTACTTCTCCCTC...ACA'), id='seq222', name='<unknown name>', description='<unknown description>', dbxrefs=[])
+>>> records['seq222'].seq
+Seq('TTGATCGGTGACAAATTTTTTACAAAGAACTGTAGGACTTGCTACTTCTCCCTC...ACA')
+>>> handle.close() # 文件关闭后，无法继续访问
+>>> records['seq222'].seq
+Traceback (most recent call last):
+...
+ValueError: cannot retrieve sequence: file is closed
+```
+
+对其它文件格式，`Bio.SeqIO` 提供了三个相关函数，实现随机访问功能：
+
+- `Bio.SeqIO.to_dict()` 最灵活，内存占用最高。将所有记录转换为 dict。
+- `Bio.SeqIO.index()` 类似只读 dict，根据需要将序列解析为 `SeqRecord`。
+- `Bio.SeqIO.index_db()` 类似只读 dict，但是将识别符和 file offsets 保存为 SQLite3 数据库文件，内存占用低，但要慢一点。
+
+
 
 ## 输出序列文件
 
