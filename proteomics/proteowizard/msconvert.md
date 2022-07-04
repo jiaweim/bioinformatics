@@ -9,6 +9,8 @@
     - [压缩选项](#压缩选项)
     - [配置文件](#配置文件)
   - [过滤器](#过滤器)
+    - [index](#index)
+    - [id](#id)
     - [peakPicking](#peakpicking)
     - [zeroSamples](#zerosamples)
     - [threshold](#threshold)
@@ -17,6 +19,9 @@
     - [activation](#activation)
     - [ETDFilter](#etdfilter)
     - [titleMaker](#titlemaker)
+    - [msLevel](#mslevel)
+    - [chargeState](#chargestate)
+    - [mzRefiner](#mzrefiner)
   - [示例](#示例)
     - [导出 mzML 配置](#导出-mzml-配置)
   - [图形化界面](#图形化界面)
@@ -27,8 +32,9 @@
     - [Package in gzip](#package-in-gzip)
   - [参考](#参考)
 
-2021-12-09, 12:39
-***
+Last updated: 2022-07-04, 13:47
+@author Jiawei Mao
+****
 
 ## 简介
 
@@ -39,6 +45,8 @@ msconvert 使用命令格式：
 ```sh
 msconvert [options] [filemasks]
 ```
+
+返回转换失败的文件个数。
 
 ## 支持的格式
 
@@ -70,41 +78,22 @@ msconvert 支持如下开放格式：
 
 ## 选项
 
-- `-f [ --filelist ] arg`
-
-指定包含文件名的文本文件。
-
-- `-o [ --outdir ] arg (=.)`
-
-设置输出目录，默认为当前目录。`-` 表示 stdout。
-
-- `-c [ --config ] arg`
-
-设置配置文件。(optionName=value)
-
-- `-v [--verbose]`
-
-显示详细的进度信息。
-
-- `--outfile arg`
-
-覆盖输出文件名。
-
-- `-e [ --ext ] arg`
-
-设置输出文件扩展名。
-
-- `-i [ --contactInfo ] arg`
-
-包含联系人信息的文件名。
-
-- `--filter arg`
-
-添加谱图过滤器。
-
-- `--chromatogramFilter arg`
-
-添加色谱过滤器。
+|选项|说明|
+|---|---|
+|`-f [ --filelist ] arg`|指定包含文件名的文本文件|
+|`-o [ --outdir ] arg (=.)`|设置输出目录，默认为当前目录。`-` 表示 stdout|
+|`-c [ --config ] arg`|设置配置文件。(optionName=value)|
+|`-v [--verbose]`|显示详细的进度信息|
+|`--outfile arg`|覆盖输出文件名|
+|`-e [ --ext ] arg`|设置输出文件扩展名 `[mzML|mzXML|mgf|txt|mz5]`|
+|`-i [ --contactInfo ] arg`|包含联系人信息的文件名|
+|`--noindex`|不写入索引|
+|`--filter arg`|添加谱图过滤器|
+|`--chromatogramFilter arg`|添加色谱过滤器|
+|`--merge`|多个输入文件合并为单个输出文件|
+|`--runIndexSet arg`|对多次运行 sources,选择指定 run indices|
+|`--singleThreaded [=arg(=1)] (=2)`|true 表示单线程读写|
+|`--help`|显示详细的帮助信息|
 
 ### 输出格式
 
@@ -135,7 +124,7 @@ msconvert 支持如下开放格式：
 
 - `-z [ --zlib ]`
 
-binary data 使用 zlib 压缩。
+使用 zlib 压缩 binary data。
 
 - `--numpressLinear [=arg(=2e-09)]`
 
@@ -143,7 +132,7 @@ binary data 使用 zlib 压缩。
 
 - `--numpressLinearAbsTol [=arg(=-1)]`
 
-numpress linear prediction 使用的绝对 tolerance，例如，500 m/z 处 0.2 ppm 使用 1e-4。使用该选项会大大减少文件大小，并覆盖相对 accuracy tolerance。
+numpress linear prediction 使用的绝对 tolerance，例如，500 m/z 处 0.2 ppm 使用 1e-4，默认 -1.0 实现最大精度。使用该选项会大大减少文件大小，并覆盖相对 accuracy tolerance。
 
 - `--numpressPic`
 
@@ -165,13 +154,13 @@ gzip 压缩输出文件。
 
 使用 `-c [ --config ]` 指定配置文件，例如：
 
-```sh
+```bash
 msconvert data.RAW -c config.txt
 ```
 
 配置文件，每行一个参数，用 `=` 分隔参数和值。例如：
 
-```sh
+```txt
 mzXML=true
 zlib=true
 filter="index [3,7]"
@@ -184,7 +173,7 @@ filter="precursorRecalculation"
 
 过滤器的格式：
 
-```sh
+```bash
 filtername filterargs
 ```
 
@@ -196,7 +185,8 @@ filtername filterargs
 --filter "index 1-15"
 ```
 
-> 过滤器是按照列出的顺序依次应用，列出过滤器的顺序不同，对结果影响很大。特别是要使用供应商提供的质心算法（centroiding），因为这些算法使用的是供应商的 dll，只能处理原始数据，所以要首先使用 peakPicking。
+> [!IMPORTANT]
+> 过滤器按照列出的顺序依次应用，列出过滤器的顺序不同，对结果影响很大。特别是要使用供应商提供的质心算法（centroiding），因为这些算法使用的是供应商的 dll，只能处理原始数据，所以要首先使用 peakPicking。
 
 许多过滤器使用整数集合 `int_set` 参数，`int_set` 可以写成 `[a,b]` 或 `a[-][b]` 格式：
 
@@ -205,13 +195,39 @@ filtername filterargs
 - '9' 也是集合，等价于 '[9,9]'；
 - '[0,2] 5-7' 为集合 '0 1 2 5 6 7'。
 
-### peakPicking
+### index
 
-```sh
-peakPicking [<PickerType> [snr=<minimum signal-to-noise ratio>] [peakSpace=<minimum peak spacing>] [msLevel=<ms_levels>]]
+```bash
+index <index_value_set>
 ```
 
-对指定的 `<ms_levels>` 谱图进行 centroiding 处理。
+通过索引选择谱图。索引是基于 0 的谱图在文件中出现的顺序。
+
+`<index_value_set>` 是 `int_set` 格式的索引。
+
+- 提取索引 5...10 和 20...25 的谱图
+
+```bash
+msconvert data.RAW --filter "index [5,10] [20,25]"
+```
+
+### id
+
+```bash
+id <id_set>
+```
+
+使用 native IDs 选择谱图，`<id_set>` 是分号 `;` 分隔的 ids。
+
+### peakPicking
+
+```bash
+peakPicking [<PickerType> [snr=<minimum signal-to-noise ratio>] 
+  [peakSpace=<minimum peak spacing>]
+  [msLevel=<ms_levels>]]
+```
+
+对指定 `<ms_levels>` 谱图进行 centroiding 处理。
 
 `<PickerType>` 值包括：
 
@@ -224,14 +240,14 @@ peakPicking [<PickerType> [snr=<minimum signal-to-noise ratio>] [peakSpace=<mini
 
 默认选项:
 
-- `<PickerType>` 为非供应商提供的 low-quality local maximum算法；
+- `<PickerType>` 为非供应商提供的 low-quality local maximum 算法；
 - `<signal-to-noise ratio> = 1.0`
 - `<minimum peak spacing> = 0.1`
 - `<ms_levels> = 1-`
 
 ### zeroSamples
 
-```sh
+```bash
 zeroSamples <mode> [<MS_levels>]
 ```
 
@@ -243,14 +259,26 @@ zeroSamples <mode> [<MS_levels>]
 
 - 如果 `<mode>` 为 "removeExtra"，则移除谱图中连续的强度为 0 的谱峰。例如，对 peak list：
 
-```sh
+```bash
 "100.1,1000 100.2,0 100.3,0 100.4,0 100.5,0 100.6,1030"
 ```
 
 处理后变为：
 
-```sh
+```bash
 "100.1,1000 100.2,0 100.5,0 100.6,1030"
+```
+
+谱峰列表：
+
+```bash
+100.1,0 100.2,0 100.3,0 100.4,0 100.5,0 100.6,1030 100.7,0 100.8,1020 100.9,0 101.0,0
+```
+
+变为：
+
+```bash
+100.5,0 100.6,1030 100.7,0 100.8,1020 100.9,0
 ```
 
 可以看到，移除了中间部分的 0 强度谱峰。
@@ -261,19 +289,19 @@ zeroSamples <mode> [<MS_levels>]
 
 - 移除 non-flanking zero
 
-```sh
+```bash
 msconvert data.RAW --filter "zeroSamples removeExtra"
 ```
 
 - 移除 MS2 和 MS3 的 non-flanking zero
 
-```sh
+```bash
 msconvert data.RAW --filter "zeroSamples removeExtra 2 3"
 ```
 
 - 保证 MS2 和 MS3 的非零数据点附近至少有 5 个 flanking zero
 
-```sh
+```bash
 msconvert data.RAW --filter "zeroSamples addMissing=5 2 3"
 ```
 
@@ -323,13 +351,13 @@ scanNumber <scan_numbers>
 
 ### precursorRecalculation
 
-重新计算母离子的 m/z 和 charge。通过 MS1 谱图推断母离子质量。
+重新计算 MS2 谱图母离子的 m/z 和 charge。通过 MS1 谱图推断母离子质量。
 
-只能用于 orbitrap 和 FT 数据。自添加该功能之后，Thermo 已经修正了自己的 precursor问题，所有没有原来那么有用了。
+虽然没有使用任何第三方的代码，但它仅适用于 orbitrap 和 FT 数据。自添加该功能之后，Thermo 已经修正了 precursor 问题，所以这个功能没有原来那么有用了。
 
 ### activation
 
-```sh
+```bash
 activation <precursor_activation_type>
 ```
 
@@ -337,18 +365,25 @@ activation <precursor_activation_type>
 
 `<precursor_activation_type>` 可选类型包括：ETD CID SA HCD BIRD ECD IRMPD PD PSD PQD SID or SORI.
 
+- 只保留 HCD 谱图
+
+```bash
+--filter "activation HCD"
+```
+
 ### ETDFilter
 
-```sh
+```bash
 ETDFilter [<removePrecursor> [<removeChargeReduced> [<removeNeutralLoss> [<blanketRemoval> [<matchingTolerance> ]]]]]
 ```
 
-过滤 ETD Msn 谱图数据点，移除未反应的 precursors，charge-reduced precursors, and neutral losses.
+过滤 ETD Msn 谱图数据点，移除未反应的 precursors，charge-reduced precursors 和 neutral losses.
 
-- `<removePrecursor>`，指定 "true" 移除母离子，默认 "false"；
-- `<removeChargeReduced>`，指定 "true" 移除低价态母离子，默认 "false"；
-- `<removeNeutralLoss>`，指定 "true" 移除低价态母离子的中性丢失，默认 "false"；
-- `<matchingTolerance>`，指定匹配的 tolerance，MZ 或 PPM，如 "3.1 MZ" (the default) 或 "2.2 PPM"。
+- `<removePrecursor>`，"true" 表示移除没有反应的母离子，默认 "true"；
+- `<removeChargeReduced>`，"true" 移除低价态母离子，默认 "true"；
+- `<removeNeutralLoss>`, "true" 移除低价态母离子的中性丢失，默认 "true"；
+- `<blanketRemoval>`, "true" 表示移除 60 Da 范围 内的中性丢失，而不仅仅移除已知的中性丢失，默认 "true"；
+- `<matchingTolerance>`，指定匹配的 tolerance，MZ 或 PPM，如 "3.1 mz" (the default) 或 "2.2 ppm"。
 
 例如：
 
@@ -390,79 +425,125 @@ titleMaker <format_string>
 --filter "titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>"
 ```
 
+### msLevel
+
+```bash
+msLevel <mslevels>
+```
+
+选择指定的 `<msleveels>`，以 `int_set` 格式指定谱图。
+
+- 提取一级谱
+
+```bash
+--filter "msLevel 1"
+```
+
+- 提取二级谱和三级谱
+
+```bash
+--filter "msLevel 2-3"
+```
+
+完整命令：
+
+```bash
+msconvert data.RAW --filter "msLevel 2-3"
+```
+
+- 提取所有 n>1 的 MSn 谱图
+
+```bash
+--filter "msLvel 2-"
+```
+
+### chargeState
+
+```bash
+chargeState <charge_states>
+```
+
+选择指定价态的谱图。`<charge_states>` 为 int_set 格式。
+
+0 表示包括没有价态的谱图。
+
+### mzRefiner
+
+```bash
+mzRefiner input1.pepXML input2.mzid [msLevels=<1->] [thresholdScore=<CV_Score_Name>] [thresholdValue=<floatset>] [thresholdStep=<float>] [maxSteps=<count>]
+```
+
+
+
 ## 示例
 
-- 例1
+- 打印帮助信息
 
-打印帮助信息
-
-```sh
+```bash
 msconvert
 ```
 
 输出的信息很多，首次使用可以好好看看。
 
-- 例 2
+- 打印帮助信息，额外输出 filters 信息
 
-打印帮助信息，额外输出 filters 信息
-
-```sh
+```bash
 msconvert --help
 ```
 
 输出的信息，比单独使用 `msconvert` 多一倍，msconvert 提供了大量的过滤器。
 
-- 例 3
+- 导出 mzML
 
-```sh
+```bash
 msconvert data.RAW
 ```
 
 在当前目录，将 `data.RAW` 转换为 `data.mzML`
 
-- 例 4
+- 导出 mzXML
 
-```sh
+```bash
 msconvert data.RAW --mzXML
 ```
 
 在当前目录创建 data.mzXML 文件。
 
-- 例 5
+- 批量导出
 
-```sh
+```bash
 msconvert *.RAW -o my_output_dir
 ```
 
-将所有 RAW 文件转换为 mzML，输出文件放在 `my_output_dir` 目录。
+将所有 RAW 文件转换为 mzML，输出到 `my_output_dir` 目录。
 
-- 例 6
+- 指定压缩格式和过滤器
 
-```sh
+```bash
 msconvert data.RAW --zlib --filter "peakPicking true [2,3]"
 ```
 
 对 binary 数组使用 zlib 压缩，对 msLevels [2,3] 使用供应商的 centroiding。
 
-- 例 7
+- msLevel 过滤
 
-```sh
+```bash
 msconvert data.RAW --filter "msLevel 2"
 ```
 
 只输出 ms2 谱图。
 
-- 例 8
+- msLevel 过滤
 
-```sh
+```bash
 msconvert data.RAW --filter "msLevel 2-"
 ```
 
 输出 ms2 及以上的谱图。
 
-- 例 9
+- 零值样本过滤
 
-```sh
+```bash
 msconvert data.RAW --filter "zeroSamples removeExtra"
 ```
 
@@ -476,7 +557,7 @@ msconvert data.RAW --32 --zlib --filter "peakPicking true 1-" --filter "zeroSamp
 
 创建更小文件的一个设置，类似旧的 ReAdW 转换程序的输出。
 
-- 例 11
+- 多个过滤器
 
 ```sh
 msconvert data.RAW --filter "peakPicking true 1-" --filter "threshold bpi-relative .5 most-intense"
@@ -484,23 +565,23 @@ msconvert data.RAW --filter "peakPicking true 1-" --filter "threshold bpi-relati
 
 应用多个过滤器：peak picking，强度不小于基峰的 50%。
 
-- 例 12
+- 多个过滤器
 
 ```sh
 msconvert data.RAW --filter "peakPicking true 1-" --filter "threshold count 100 least-intense"
 ```
 
-应用 peak picking，保留强度最小 100 个谱峰。
+应用 peak picking，保留强度最小的 100 个谱峰。
 
-- 例 13
+- 多个过滤器
 
-```sh
+```bash
 msconvert data.RAW --filter "scanNumber [500,1000]" --filter "precursorRecalculation"
 ```
 
 选择 scan number 在 [500,1000] 之间的谱图，并校准母离子。
 
-- 例 14
+- threshold 过滤
 
 ```sh
 msconvert data.RAW --filter "threshold count 42 most-intense"
