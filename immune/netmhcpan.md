@@ -90,6 +90,14 @@ netMHCpan options
 netMHCpan -p test.pep > test.pep.myout
 ```
 
+肽段列表格式，一行一条肽段：
+
+```csv
+TMDKSELVQK
+EILNSPEKAC
+KMKGDYFRY
+```
+
 - 例 2，
 
 ```sh

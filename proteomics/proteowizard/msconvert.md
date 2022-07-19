@@ -343,11 +343,19 @@ threshold <type> <threshold> <orientation> [<mslevels>]
 
 ### scanNumber
 
-```sh
+```bash
 scanNumber <scan_numbers>
 ```
 
 通过 scan number 选择谱图，保留指定 scan numbers 对应的谱图。
+
+`<scan_numbers>` 为 `int_set` 类型。
+
+例如，跳过 110513 这个 scan，可以用：
+
+```bash
+--filter "scanNumber 1-110512 110514-"
+```
 
 ### precursorRecalculation
 
