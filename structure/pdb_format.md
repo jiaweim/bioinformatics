@@ -306,7 +306,6 @@ _database_2.database_code              '5HVP'
 在 ENTRY 类别中只有一项，即 `_entry.id`。该项为此结构的名称。
 
 
-
 ## PDB 格式说明
 
 PDB 格式是包含原子坐标文件的标准格式。它被用于蛋白质数据库中的结构存储。
