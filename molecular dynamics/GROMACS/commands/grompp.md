@@ -65,15 +65,15 @@ include = -I/home/john/doe
 
 ### 输入文件选项
 
-|选项|可选|说明|
+|选项|默认值|说明|
 |---|---|---|
 |`-f [<.mdp>] (grompp.mdp)`||MD 参数文件|
-|`-c [<.gro/.g96/…>] (conf.gro)`||结构文件：gro g96 pdb brk ent esp tpr|
+|`-c` [<.gro/.g96/…>]|conf.gro|结构文件：gro g96 pdb brk ent esp tpr|
 |`-r [<.gro/.g96/…>] (restraint.gro)`|yes|结构文件：gro g96 pdb brk ent esp tpr|
 |`-rb [<.gro/.g96/…>] (restraint.gro)`|yes|结构文件：gro g96 pdb brk ent esp tpr|
 |`-n [<.ndx>] (index.ndx)`|yes|索引文件|
 |`-p [<.top>] (topol.top)`||拓扑文件|
-|`-t [<.trr/.cpt/…>] (traj.trr)`|yes|全精度轨迹：trr cpt tng|
+|`-t` [<.trr/.cpt/…>]|traj.trr)|全精度轨迹：trr cpt tng|
 |`-e [<.edr>] (ener.edr)`|yes|能量文件|
 |`-qmi [<.inp>] (topol-qmmm.inp)`|yes|QM 程序的输入文件|
 

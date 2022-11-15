@@ -18,6 +18,8 @@ GROMACS (Groningeen Machine for Chemical Simulations)是一个开源、免费的
 
 这个教程是一个基于 GROMACS 交互式 Jupyter notebook。可以在浏览器中运行本教程，也可以下载安装软件在本地运行。
 
+![](images/2022-11-15-12-49-30.png)
+
 ## 在线运行
 
 省略。。。

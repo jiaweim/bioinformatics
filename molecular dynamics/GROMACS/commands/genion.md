@@ -41,6 +41,12 @@ gmx genion [-s [<.tpr>]] [-n [<.ndx>]] [-p [<.top>]]
 |---|---|---|
 |`-o [<.gro/.g96/…>] (out.gro)`||结构文件：gro g96 pdb brk ent esp|
 
+**其它选项**
+
+|选项|可选|说明|
+|---|---|---|
+|`-[no]neutral`|no|表示添加足够的离子来中和系统，这些离子是在 -np/-nn 和 -conc 的基础上添加离子|
+
 ## 参考
 
 - https://manual.gromacs.org/current/onlinehelp/gmx-genion.html

@@ -19,7 +19,8 @@
   - [操作总结](#操作总结)
   - [参考](#参考)
 
-2022-05-24, 17:16
+Last updated: 2022-11-14, 18:46
+@author Jiawei Mao
 ****
 
 ## 简介
@@ -104,7 +105,7 @@ From '/usr/local/share/gromacs/top':
 15: OPLS-AA/L all-atom force field (2001 aminoacid dihedrals)
 ```
 
-力场包含要写入拓扑文件的信息，其选择非常重要。这里我们选择 OPLS 力场，因此输入 15，然后回车。
+力场包含要写入拓扑文件的信息，其选择非常重要。这里选择 OPLS 力场，因此输入 15，然后回车。
 
 `pdb2gmx` 有很多选项，常用的有：
 

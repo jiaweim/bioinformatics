@@ -6,9 +6,9 @@
 
 ## GROMACS 教程
 
-- [1. 水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
+- [周期性边界条件](tutorial/pbc.md)
+- [水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
 
-## 指南
 
 
 

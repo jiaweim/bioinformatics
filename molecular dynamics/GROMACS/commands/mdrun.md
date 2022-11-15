@@ -4,7 +4,6 @@
   - [简介](#简介)
   - [选项](#选项)
     - [输入文件选项](#输入文件选项)
-    - [输出文件选项](#输出文件选项)
     - [其它选项](#其它选项)
     - [输入/输出文件选项](#输入输出文件选项)
   - [参考](#参考)
@@ -174,8 +173,6 @@ mdrun 监听的端口可以使用‐imdport 来更改. 如果使用IMD操控, �
 |`-s [<.tpr>]`|topol.tpr|输入|运行输入文件: tpr tpb tpa|
 |‐cpi [<.cpt>]|state.cpt|输入, 可选检查点文件|
 
-### 输出文件选项
-
 ### 其它选项
 
 |选项|默认值|说明|
@@ -186,7 +183,7 @@ mdrun 监听的端口可以使用‐imdport 来更改. 如果使用IMD操控, �
 |`‐ddorder <enum>`|interleave|DD rank 顺序: interleave, pp_pme, cartesian|
 |`‐npme <int>`|‐1|用于 PME 的独立进程数, ‐1 表示使用猜测值|
 |`‐nt <int>`|0|启动的总线程数(0表示使用猜测值)|
-‐ntmpi <int> 0 启动的线程MPI的线程数(0表示使用猜测值)
+|`‐ntmpi`|0|MPI线程数(0表示使用猜测值)|
 ‐ntomp <int> 0 每个MPI进程启动的OpenMP线程数(0表示使用猜测值)
 ‐ntomp_pme
 <int> 0 每个MPI进程启动的OpenMP线程数(0表示使用猜测值)

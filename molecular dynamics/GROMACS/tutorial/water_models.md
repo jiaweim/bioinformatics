@@ -70,8 +70,8 @@ TIP3P 模型由氧原子的 Lennard-Jones 位点和两个电荷位组成。
 |$q_M$|0 e|
 |$r_{OM}$|0 Å|
 
-
 ## 参考
 
 - https://water.lsbu.ac.uk/water/water_models.html
 - http://www.sklogwiki.org/SklogWiki/index.php/Water_models
+- https://docs.lammps.org/Howto_spc.html

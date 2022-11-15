@@ -69,63 +69,6 @@ $ grep MISSING 1fjs.pdb
 
 ```bash
 $ gmx pdb2gmx -f 1fjs_protein.pdb -o 1fjs_processed.gro -water tip3p -ff "charmm27"
-                     :-) GROMACS - gmx pdb2gmx, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx pdb2gmx -f 1fjs.pdb -o 1fjs_processed.gro -water tip3p -ff charmm27
-
-Using the Charmm27 force field in directory charmm27.ff
-
-......
-
-Now there are 52 residues with 744 atoms
-Chain time...
-
-Making bonds...
-
-Number of bonds was 750, now 750
-
-Generating angles, dihedrals and pairs...
-Before cleaning: 1959 pairs
-Before cleaning: 1979 dihedrals
-
-Making cmap torsions...
-
-There are   50 cmap torsion pairs
-
-There are 1979 dihedrals,  141 impropers, 1348 angles
-          1950 pairs,      750 bonds and     0 virtual sites
-
-Total mass 5581.215 a.m.u.
-
-Total charge -3.000 e
-
-Writing topology
-
-Including chain 1 in system: 3673 atoms 234 residues
-
-Including chain 2 in system: 744 atoms 52 residues
-
-Now there are 4417 atoms and 286 residues
-
-Total mass in system 31993.352 a.m.u.
-
-Total charge in system -2.000 e
-
-Writing coordinate file...
-
-                --------- PLEASE NOTE ------------
-
-You have successfully generated a topology from: 1fjs.pdb.
-
-The Charmm27 force field and the tip3p water model are used.
-
-                --------- ETON ESAELP ------------
-
-GROMACS reminds you: "Shaken, not Stirred" (J. Bond)
 ```
 
 这里选择了 CHARMM27 全原子力场。力场中包含要写入拓扑的信息，这是一个非常重要的选择！应该彻底了解每一个力场，并决定哪一个最适合你的情况。当不带 `-ff` 选项运行 pdb2gmx 时，会提示选择力场：
@@ -354,31 +297,6 @@ Protein_chain_L     1
 
 ```bash
 $ gmx editconf -f 1fjs_processed.gro -o 1fjs_newbox.gro -c -d 1.0 -bt dodecahedron
-                     :-) GROMACS - gmx editconf, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx editconf -f 1fjs_processed.gro -o 1fjs_newbox.gro -c -d 1.0 -bt dodecahedron
-
-Note that major changes are planned in future for editconf, to improve usability and utility.
-Read 4417 atoms
-Volume: 321.98 nm^3, corresponds to roughly 144800 electrons
-No velocities found
-    system size :  6.066  5.213  4.092 (nm)
-    diameter    :  6.268               (nm)
-    center      :  2.234  1.342  2.544 (nm)
-    box vectors :  5.577  7.196  8.023 (nm)
-    box angles  :  90.00  90.00  90.00 (degrees)
-    box volume  : 321.98               (nm^3)
-    shift       :  3.967  4.858  0.379 (nm)
-new center      :  6.201  6.201  2.923 (nm)
-new box vectors :  8.268  8.268  8.268 (nm)
-new box angles  :  60.00  60.00  90.00 (degrees)
-new box volume  : 399.60               (nm^3)
-
-GROMACS reminds you: "The soul? There's nothing but chemistry here" (Breaking Bad)
 ```
 
 上面的命令把蛋白质放在盒子中心（`-c`），且距离盒子边缘至少 1.0 nm (`-d 1.0`)。盒子类型定义为菱形十二面体（`-bt dodecahedron`）。[GROMACS 手册](https://manual.gromacs.org/current/reference-manual/algorithms/periodic-boundary-conditions.html)中有更多关于周期性边界条件和十二面体的知识。
@@ -389,60 +307,6 @@ GROMACS reminds you: "The soul? There's nothing but chemistry here" (Breaking Ba
 
 ```bash
 $ gmx solvate -cp 1fjs_newbox.gro -cs spc216.gro -o 1fjs_solv.gro -p topol.top
-                     :-) GROMACS - gmx solvate, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx solvate -cp 1fjs_newbox.gro -cs spc216.gro -o 1fjs_solv.gro -p topol.top
-
-Reading solute configuration
-Reading solvent configuration
-
-Initialising inter-atomic distances...
-
-WARNING: Masses and atomic (Van der Waals) radii will be guessed
-         based on residue and atom names, since they could not be
-         definitively assigned from the information in your input
-         files. These guessed numbers might deviate from the mass
-         and radius of the atom type. Please check the output
-         files if necessary. Note, that this functionality may
-         be removed in a future GROMACS version. Please, consider
-         using another file format for your input.
-
-NOTE: From version 5.0 gmx solvate uses the Van der Waals radii
-from the source below. This means the results may be different
-compared to previous GROMACS versions.
-
-++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
-A. Bondi
-van der Waals Volumes and Radii
-J. Phys. Chem. 68 (1964) pp. 441-451
--------- -------- --- Thank You --- -------- --------
-
-Generating solvent configuration
-Will generate new solvent configuration of 5x5x4 boxes
-Solvent box contains 45345 atoms in 15115 residues
-Removed 5904 solvent atoms due to solvent-solvent overlap
-Removed 4110 solvent atoms due to solute-solvent overlap
-Sorting configuration
-Found 1 molecule type:
-    SOL (   3 atoms): 11777 residues
-Generated solvent containing 35331 atoms in 11777 residues
-Writing generated configuration to 1fjs_solv.gro
-
-Output configuration contains 39748 atoms in 12063 residues
-Volume                 :     399.595 (nm^3)
-Density                :     1023.56 (g/l)
-Number of solvent molecules:  11777   
-
-Processing topology
-Adding line for 11777 solvent molecules with resname (SOL) to topology file (topol.top)
-
-Back Off! I just backed up topol.top to ./#topol.top.1#
-
-GROMACS reminds you: "It is not clear that intelligence has any long-term survival value." (Stephen Hawking)
 ```
 
 蛋白质的配置（`-cp`）包含在前面 `editconf` 输出结构中，溶剂的配置（`-cs`）包含在 GROMACS 安装文件中。这里使用 spc216.gro，这是一种通用的平衡三点溶剂模型盒子。对 SPC, SPC/E 或 TIP3P water 都可以使用 spc216.gro 溶剂配置，因为它们都是三点水模型。输出 1fjs_solv.gro，并为 solvate 指定拓扑文件 topoltop，使其可以根据需要修改拓扑。注意 topol.top 中 `[ molecules ]` 的改变：
@@ -483,69 +347,6 @@ $ touch ions.mdp
 
 ```bash
 $ gmx grompp -f ions.mdp -c 1fjs_solv.gro -p topol.top -o ions.tpr
-                      :-) GROMACS - gmx grompp, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx grompp -f ions.mdp -c 1fjs_solv.gro -p topol.top -o ions.tpr
-
-
-NOTE 1 [file ions.mdp]:
-  For a correct single-point energy evaluation with nsteps = 0, use
-  continuation = yes to avoid constraining the input coordinates.
-
-Setting the LD random seed to -1107379241
-
-Generated 20503 of the 20503 non-bonded parameter combinations
-Generating 1-4 interactions: fudge = 1
-
-Generated 17396 of the 20503 1-4 parameter combinations
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_L'
-
-Excluding 2 bonded neighbours molecule type 'SOL'
-
-NOTE 2 [file topol.top, line 48]:
-  System has non-zero total charge: -2.000000
-  Total charge should normally be an integer. See
-  http://www.gromacs.org/Documentation/Floating_Point_Arithmetic
-  for discussion on how close it should be to an integer.
-  
-
-
-
-NOTE 3 [file topol.top, line 48]:
-  The bond in molecule-type Protein_chain_A between atoms 415 OG1 and 416
-  HG1 has an estimated oscillational period of 9.1e-03 ps, which is less
-  than 10 times the time step of 1.0e-03 ps.
-  Maybe you forgot to change the constraints mdp option.
-
-Analysing residue names:
-There are:   286    Protein residues
-There are: 11777      Water residues
-Analysing Protein...
-Number of degrees of freedom in T-Coupling group rest is 83910.00
-
-NOTE 4 [file ions.mdp]:
-  NVE simulation with an initial temperature of zero: will use a Verlet
-  buffer of 10%. Check your energy drift!
-
-
-NOTE 5 [file ions.mdp]:
-  You are using a plain Coulomb cut-off, which might produce artifacts.
-  You might want to consider using PME electrostatics.
-
-
-
-This run will generate roughly 3 Mb of data
-
-There were 5 notes
-
-GROMACS reminds you: "Cowardly refusing to create an empty archive" (GNU tar)
 ```
 
 ```bash
@@ -666,57 +467,6 @@ fourierspacing          = 0.15     ; grid spacing for FFT
 
 ```bash
 $ gmx grompp -f emin-charmm.mdp -c 1fjs_solv_ions.gro -p topol.top -o em.tpr
-                      :-) GROMACS - gmx grompp, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx grompp -f emin-charmm.mdp -c 1fjs_solv_ions.gro -p topol.top -o em.tpr
-
-Ignoring obsolete mdp entry 'title'
-Setting the LD random seed to -33620522
-
-Generated 20503 of the 20503 non-bonded parameter combinations
-Generating 1-4 interactions: fudge = 1
-
-Generated 17396 of the 20503 1-4 parameter combinations
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
-
-turning H bonds into constraints...
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_L'
-
-turning H bonds into constraints...
-
-Excluding 2 bonded neighbours molecule type 'SOL'
-
-turning H bonds into constraints...
-
-Excluding 1 bonded neighbours molecule type 'NA'
-
-turning H bonds into constraints...
-
-Excluding 1 bonded neighbours molecule type 'CL'
-
-turning H bonds into constraints...
-Analysing residue names:
-There are:   286    Protein residues
-There are: 11703      Water residues
-There are:    74        Ion residues
-Analysing Protein...
-Number of degrees of freedom in T-Coupling group rest is 81509.00
-
-The largest distance between excluded atoms is 0.418 nm
-Calculating fourier grid dimensions for X Y Z
-Using a fourier grid of 56x56x56, spacing 0.148 0.148 0.148
-
-Estimate for the relative computational load of the PME mesh part: 0.20
-
-This run will generate roughly 3 Mb of data
-
-GROMACS reminds you: "Wild Pointers Couldn't Drag Me Away" (K.A. Feenstra)
 ```
 
 在前面运行 genbox 和 genion 时，确定在更新 topol.top 文件，否则会得到一堆错误信息。
@@ -803,42 +553,6 @@ em.edr 文件包含 GROMACS 在 EM 期间收集的所有信息。可以用 GROMA
 
 ```bash
 $ gmx energy -f em.edr -o potential.xvg -xvg none
-                      :-) GROMACS - gmx energy, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx energy -f em.edr -o potential.xvg -xvg none
-
-Opened em.edr as single precision energy file
-
-Select the terms you want from the following list by
-selecting either (part of) the name or the number or a combination.
-End your selection with an empty line or a zero.
--------------------------------------------------------------------
-  1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih.
-  5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)
-  9  Coulomb-(SR)    10  Coul.-recip.    11  Potential       12  Pressure
- 13  Constr.-rmsd    14  Vir-XX          15  Vir-XY          16  Vir-XZ
- 17  Vir-YX          18  Vir-YY          19  Vir-YZ          20  Vir-ZX
- 21  Vir-ZY          22  Vir-ZZ          23  Pres-XX         24  Pres-XY
- 25  Pres-XZ         26  Pres-YX         27  Pres-YY         28  Pres-YZ
- 29  Pres-ZX         30  Pres-ZY         31  Pres-ZZ         32  #Surf*SurfTen
- 33  T-rest
-
-Potential
-
-Last energy frame read 639 time  807.000
-
-Statistics over 808 steps [ 0.0000 through 807.0000 ps ], 1 data sets
-All statistics are over 640 points (frames)
-
-Energy                      Average   Err.Est.       RMSD  Tot-Drift
--------------------------------------------------------------------------------
-Potential                   -585636      15000    43018.1    -100650  (kJ/mol)
-
-GROMACS reminds you: "Thou shalt not kill -9" (Anonymous)
 ```
 
 最后可以看到势能的平均值，以及 potential.xvg 文件，该文件位 CSV 格式，可用其绘图：
@@ -873,7 +587,7 @@ integrator              = md        ; leap-frog integrator
 
 EM 确保了合理的初始结构（几何结构和溶剂取向）。现在需要将系统温度设为模拟所需温度，并建立溶质（蛋白质）的正确取向。达到所需问题后（根据动能），对系统施加压力，知道系统达到合适的密度。
 
-平衡通常分两步进行。第一阶段在 NVT 系综（ensemble，指恒定的粒子数、体积和温度）进行。该系综也称为 “等温等压” 或标准系综。该步骤的时间范围取决于系统内容，通常 100-200ps 就足够了，这里用 100ps 进行 NVT 平衡。该步骤所需时间取决于电脑配置，16 核机器上大概不到一个小时。
+平衡通常分两步进行。第一阶段在 NVT 系综（ensemble，指恒定的粒子数、体积和温度）进行。该系综也称为 “等温等容” 或标准系综。该步骤的时间范围取决于系统内容，通常 100-200ps 就足够了，这里用 100ps 进行 NVT 平衡。该步骤所需时间取决于电脑配置，16 核机器上大概不到一个小时。
 
 下面按照和 EM 相同的步骤调用 grompp 和 mdrun，但这次使用能量最小的结构作为输入，并使用不同的 .mdp 文件运行。文件内容如下；
 
@@ -927,103 +641,6 @@ fourierspacing          = 0.15     ; grid spacing for FFT
 ```bash
 $ gmx grompp -f nvt-charmm.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
 $ gmx mdrun -ntmpi 1 -v -deffnm nvt
-                      :-) GROMACS - gmx grompp, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx grompp -f nvt-charmm.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
-
-Ignoring obsolete mdp entry 'title'
-Setting the LD random seed to -814874625
-
-Generated 20503 of the 20503 non-bonded parameter combinations
-Generating 1-4 interactions: fudge = 1
-
-Generated 17396 of the 20503 1-4 parameter combinations
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_A'
-
-turning H bonds into constraints...
-
-Excluding 3 bonded neighbours molecule type 'Protein_chain_L'
-
-turning H bonds into constraints...
-
-Excluding 2 bonded neighbours molecule type 'SOL'
-
-turning H bonds into constraints...
-
-Excluding 1 bonded neighbours molecule type 'NA'
-
-turning H bonds into constraints...
-
-Excluding 1 bonded neighbours molecule type 'CL'
-
-turning H bonds into constraints...
-
-Setting gen_seed to -537133955
-
-Velocities were taken from a Maxwell distribution at 300 K
-Analysing residue names:
-There are:   286    Protein residues
-There are: 11703      Water residues
-There are:    74        Ion residues
-Analysing Protein...
-Number of degrees of freedom in T-Coupling group System is 81509.00
-
-The largest distance between excluded atoms is 0.424 nm
-
-Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 300 K
-
-Calculated rlist for 1x1 atom pair-list as 1.233 nm, buffer size 0.033 nm
-
-Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
-
-Note that mdrun will redetermine rlist based on the actual pair-list setup
-
-NOTE 1 [file nvt-charmm.mdp]:
-  Removing center of mass motion in the presence of position restraints
-  might cause artifacts. When you are using position restraints to
-  equilibrate a macro-molecule, the artifacts are usually negligible.
-
-Calculating fourier grid dimensions for X Y Z
-Using a fourier grid of 56x56x56, spacing 0.148 0.148 0.148
-
-Estimate for the relative computational load of the PME mesh part: 0.22
-
-This run will generate roughly 3 Mb of data
-
-There was 1 note
-
-GROMACS reminds you: "Meet Me At the Coffee Shop" (Red Hot Chili Peppers)
-
-                      :-) GROMACS - gmx mdrun, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx mdrun -ntmpi 1 -v -deffnm nvt
-
-Reading file nvt.tpr, VERSION 2022.3 (single precision)
-Changing nstlist from 10 to 80, rlist from 1.2 to 1.315
-
-Using 1 MPI thread
-Using 104 OpenMP threads 
-
-starting mdrun 'COAGULATION FACTOR XA'
-50000 steps,    100.0 ps.
-step 49900, remaining wall clock time:     0 s          
-Writing final coordinates.
-step 50000, remaining wall clock time:     0 s          
-               Core t (s)   Wall t (s)        (%)
-       Time:    15681.364      150.783    10400.0
-                 (ns/day)    (hour/ns)
-Performance:       57.302        0.419
-
-GROMACS reminds you: "I'm Only Faking When I Get It Right" (Soundgarden)
 ```
 
 NVT 平衡大概要 5 到 10 分钟。
@@ -1032,43 +649,6 @@ NVT 平衡大概要 5 到 10 分钟。
 
 ```bash
 $ gmx energy -f nvt.edr -o temperature.xvg -xvg none
-                      :-) GROMACS - gmx energy, 2022.3 (-:
-
-Executable:   /usr/local/gromacs/bin/gmx
-Data prefix:  /usr/local/gromacs
-Working dir:  /home/maojiawei/data/gromacs_demo
-Command line:
-  gmx energy -f nvt.edr -o temperature.xvg -xvg none
-
-Opened nvt.edr as single precision energy file
-
-Select the terms you want from the following list by
-selecting either (part of) the name or the number or a combination.
-End your selection with an empty line or a zero.
--------------------------------------------------------------------
-  1  Bond             2  U-B              3  Proper-Dih.      4  Improper-Dih. 
-  5  CMAP-Dih.        6  LJ-14            7  Coulomb-14       8  LJ-(SR)       
-  9  Coulomb-(SR)    10  Coul.-recip.    11  Position-Rest.  12  Potential     
- 13  Kinetic-En.     14  Total-Energy    15  Conserved-En.   16  Temperature   
- 17  Pressure        18  Constr.-rmsd    19  Vir-XX          20  Vir-XY        
- 21  Vir-XZ          22  Vir-YX          23  Vir-YY          24  Vir-YZ        
- 25  Vir-ZX          26  Vir-ZY          27  Vir-ZZ          28  Pres-XX       
- 29  Pres-XY         30  Pres-XZ         31  Pres-YX         32  Pres-YY       
- 33  Pres-YZ         34  Pres-ZX         35  Pres-ZY         36  Pres-ZZ       
- 37  #Surf*SurfTen   38  T-System        39  Lamb-System   
-
-Temperature
-
-Last energy frame read 100 time  100.000          
-
-Statistics over 50001 steps [ 0.0000 through 100.0000 ps ], 1 data sets
-All statistics are over 501 points
-
-Energy                      Average   Err.Est.       RMSD  Tot-Drift
--------------------------------------------------------------------------------
-Temperature                 299.862       0.13    2.97768     0.9103  (K)
-
-GROMACS reminds you: "Good judgement is the result of experience; experience is the result of bad judgement." (Mark Twain)
 ```
 
 ![](images/2022-11-09-19-30-19.png)
@@ -1077,7 +657,83 @@ GROMACS reminds you: "Good judgement is the result of experience; experience is 
 
 ## 压力平衡
 
-上一步完成了 NVT 平衡，稳定了系统温度。在收集数据前，还需要稳定系统压力（或密度）。压力平衡在 NPT 系综下进行，其粒子数、压力和温度保持很定。该系综也称为 “等温-等压” 系综，最接近实验条件。
+NVT 平衡稳定了系统温度。在收集数据前，还需要稳定系统压力（或密度）。压力平衡在 NPT 系综下进行，其粒子数、压力和温度保持恒定，该系综也称为 “等温-等压” 系综，最接近实验条件。
+
+100 ps NPT 平衡参数示例：
+
+```bash
+title                   = CHARMM NPT equilibration 
+define                  = -DPOSRES  ; position restrain the protein 
+
+; Parameters describing what to do, when to stop and what to save
+integrator              = md        ; leap-frog integrator
+dt                      = 0.002     ; 2 fs
+nsteps                  = 50000     ; 2 * 50000 = 100 ps
+nstenergy               = 500       ; save energy and temperature every 1.0 ps
+
+; periodic boundary condition
+pbc                     = xyz       ;
+
+continuation            = yes      
+
+; Pressure coupling is on
+pcoupl                  = C-rescale             ; Pressure coupling on in NPT
+pcoupltype              = isotropic             ; uniform scaling of box vectors
+tau_p                   = 1.0                   ; time constant, in ps
+ref_p                   = 1.0                   ; reference pressure, in bar
+compressibility         = 4.5e-5                ; isothermal compressibility of water, bar^-1
+refcoord_scaling        = com
+
+; Keep system temperature fluctuating physically correct
+tcoupl                  = V-rescale           ; modified Berendsen thermostat
+tc-grps                 = system   ; coupling groups 
+tau_t                   = 0.1      ; time constant, in ps
+ref_t                   = 300      ; reference temperature, one for each group, in K
+
+; Settings that make sure we run with parameters in harmony with the selected force-field
+constraints             = h-bonds   ; bonds involving H are constrained
+rcoulomb                = 1.2       ; short-range electrostatic cutoff (in nm)
+rvdw                    = 1.2       ; short-range van der Waals cutoff (in nm)
+vdw-modifier            = Force-switch ;  specific CHARMM
+rvdw_switch             = 1.0       ;
+DispCorr                = no        ; account for cut-off vdW scheme -
+;in case of CHARMM DispCorr = EnerPres only for monolayers
+coulombtype             = PME       ; Particle Mesh Ewald for long-range electrostatics
+fourierspacing          = 0.15     ; grid spacing for FFT
+```
+
+与 NVT 平衡的参数没有差别不大，注意增加的压力耦合部分。这个平衡阶段使用 Berendsen 气压计。主要变化：
+
+- `continuation = yes`，从 NVT 平衡阶段开始继续模拟
+- `gen_vel = no`，
+
+```bash
+gmx grompp -f input/npt-charmm.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol.top -o npt.tpr
+```
+
+使用 `-t` 选项指定来自 NVT 平衡的检查点文件，该文件包含继续模拟所需的所有状态变量。为了保持 NVT 期间的速度，使用 `-c` 选项指定 NVT 最终的坐标文件。
+
+开始平衡：
+
+```bash
+gmx mdrun -ntmpi 1 -v -deffnm npt
+```
+
+使用 energy 分析压力变化：
+
+```bash
+gmx energy -f npt.edr -o pressure.xvg -xvg none
+```
+
+> 选择 Pressure
+
+在看密度变化：
+
+```bash
+gmx energy -f npt.edr -o density.xvg -xvg none
+```
+
+选择  Density。
 
 
 

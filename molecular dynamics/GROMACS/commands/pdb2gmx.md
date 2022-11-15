@@ -26,19 +26,23 @@ gmx pdb2gmx [-f [<.gro/.g96/...>]] [-o [<.gro/.g96/...>]] [-p [<.top>]]
 
 **IO 选项**
 
-|选项|说明|默认|
+|选项|默认|说明|
 |---|---|---|
-|`-f` [<.gro/.g96/...>]|输入结构文件：gro g96 pdb brk ent esp tpr|protein.pdb|
-|`-o` [<.gro/.g96/…>]|输出结构文件：gro g96 pdb brk ent esp|conf.gro|
+|`-f`|protein.pdb|输入结构文件|
+|`-o`|conf.gro|输出结构文件|
+|`-p`|topol.top|输出拓扑文件|
+|`-i`|posre.itp|输出位置约束文件|
+|`-n`|index.ndx|输出索引文件|
 
 **其他选项**
 
-|选项|说明|默认|
+|选项|默认|说明|
 |---|---|---|
 |`-[no]ignh`|忽略坐标文件中的氢原子|
-|`-water`|指定水模型：select, none, spc, spce, tip3p, tip4p, tip5p, tips3p|select|
+|`-water`|指定水模型：select, none, spc, spce, tip3p, tip4p, tip5p, tips3p|
 |`-[no]inter`|将接下来的 8 个选项设置为交互式的|
 |`-[no]ter`|为 N 端和 C 端交互式分配电荷|
+|`-ff`|设置力场|
 
 ## 参考
 
