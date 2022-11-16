@@ -6,6 +6,9 @@
 
 ## GROMACS 教程
 
+- [分子力学](tutorial/mm.md)
+- [成键相互作用](tutorial/bonded_interactions.md)
+- [非键相互作用](tutorial/non_bonded_interactions.md)
 - [周期性边界条件](tutorial/pbc.md)
 - [水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
 
