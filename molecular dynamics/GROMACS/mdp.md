@@ -5,7 +5,8 @@
   - [参数](#参数)
     - [能量最小化](#能量最小化)
   - [示例参数](#示例参数)
-    - [能量最小化示例](#能量最小化示例)
+    - [能量最小化参数](#能量最小化参数)
+    - [NVT 平衡参数](#nvt-平衡参数)
   - [Preprocessing](#preprocessing)
   - [Run control](#run-control)
   - [输出](#输出)
@@ -29,7 +30,7 @@
 
 ## 示例参数
 
-### 能量最小化示例
+### 能量最小化参数
 
 ```mdp
 ; MINIMIZATION RUN (minim.mdp)
@@ -64,6 +65,70 @@ pbc             = xyz       ; Periodic Boundary Conditions in all 3 dimensions
 
 - 静电和范德华相互作用
 - 周期性边界条件设置
+
+对这一部分，通常使用一些标准值，在其它的 mdp 文件中，一般也是这些值。例如，对静电（`rcoulomb = 1.0`）和范德华（`rvdw=1.0`）相互作用，截止值通常建议使用 1.0-1.2 nm，并且使用粒子网格方法（Particle Mesh Ewald, **PME**）处理长程非键相互作用。
+
+### NVT 平衡参数
+
+NVT 系综平衡参数模板，要求系统达到所需温度。
+
+```mdp
+define                  = -DPOSRES  ; position restrain the protein
+; Run parameters
+integrator              = md        ; leap-frog integrator
+nsteps                  = 50000     ; 2 * 50000 = 100 ps
+dt                      = 0.002     ; 2 fs
+; Output control
+nstxout                 = 500       ; save coordinates every 1.0 ps
+nstvout                 = 500       ; save velocities every 1.0 ps
+nstenergy               = 500       ; save energies every 1.0 ps
+nstlog                  = 500       ; update log file every 1.0 ps
+; Bond parameters
+continuation            = no        ; first dynamics run
+constraint_algorithm    = lincs     ; holonomic constraints 
+constraints             = h-bonds   ; bonds involving H are constrained
+lincs_iter              = 1         ; accuracy of LINCS
+lincs_order             = 4         ; also related to accuracy
+; Nonbonded settings 
+cutoff-scheme           = Verlet    ; Buffered neighbor searching
+ns_type                 = grid      ; search neighboring grid cells
+nstlist                 = 10        ; 20 fs, largely irrelevant with Verlet
+rcoulomb                = 1.0       ; short-range electrostatic cutoff (in nm)
+rvdw                    = 1.0       ; short-range van der Waals cutoff (in nm)
+DispCorr                = EnerPres  ; account for cut-off vdW scheme
+; Electrostatics
+coulombtype             = PME       ; Particle Mesh Ewald for long-range electrostatics
+pme_order               = 4         ; cubic interpolation
+fourierspacing          = 0.16      ; grid spacing for FFT
+; Temperature coupling is on
+tcoupl                  = V-rescale             ; modified Berendsen thermostat
+tc-grps                 = Protein Non-Protein   ; two coupling groups - more accurate
+tau_t                   = 0.1     0.1           ; time constant, in ps
+ref_t                   = 300     300           ; reference temperature, one for each group, in K
+; Pressure coupling is off
+pcoupl                  = no        ; no pressure coupling in NVT
+; Periodic boundary conditions
+pbc                     = xyz       ; 3-D PBC
+; Velocity generation
+gen_vel                 = yes       ; assign velocities from Maxwell distribution
+gen_temp                = 300       ; temperature for Maxwell distribution
+gen_seed                = -1        ; generate a random seed
+```
+
+过一下上面的一些重要参数。
+
+第一行使用 `define=-DPOSRES` 对蛋白应用位置约束。位置约束在 `gmx pdb2gmx` 创建的 `posre.itp` 文件中，用于平衡蛋白质周围的溶剂时，不引起蛋白质结构的显著变化。
+
+然后是运行参数：
+
+```mdp
+; Run parameters
+integrator              = md        ; leap-frog integrator
+nsteps                  = 50000     ; 2 * 50000 = 100 ps
+dt                      = 0.002     ; 2 fs
+```
+
+
 
 ## Preprocessing
 
