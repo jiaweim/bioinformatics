@@ -7,7 +7,9 @@
 - [非键相互作用](basic/non_bonded_interactions.md)
 - [力场](basic/force_fields.md)
 - [分子动力学](basic/molecular_dynamics.md)
+- [运动方程](basic/equations_of_motion.md)
 - [恒温器](basic/thermostats.md)
+- [恒压器](basic/barostats.md)
 
 ## 力场
 
