@@ -3,9 +3,12 @@
 - [恒压方法](#恒压方法)
   - [简介](#简介)
   - [Berenedsen barostat](#berenedsen-barostat)
+  - [Andersen barostat](#andersen-barostat)
+  - [Parrinello-Rahman barostat](#parrinello-rahman-barostat)
   - [参考](#参考)
 
-***
+Last updated: 2022-11-22, 14:18
+****
 
 ## 简介
 
@@ -39,7 +42,22 @@ $$\lambda = \left( 1-  \frac{k\delta t}{\tau}(P(t)- P_{bath})\right)$$
 
 其中 $k$ 是常数，表示物质的等温可压缩性，值越大表示更容易压缩。压力差越大，缩放因子 $\lambda$ 越大。
 
-> **NOTE**: Berenedsen 的主要优点在于可以调节系统和压力浴之间的耦合强度。其主要缺点是，无法从 NPT 系综中正确取样。
+> **NOTE**: Berenedsen 的主要优点在于可以调节系统和压力浴之间的耦合强度。其主要缺点是，无法从 NPT 系综中正确采样。
+> 所以 Berenedsen 一般用在平衡阶段，而不适合生产运行。
+
+## Andersen barostat
+
+Andersen barostat 是一种扩展系统方法，类似于 Nosè-Hoover 恒温方法。通过在运动方程中加入一个额外的自由度，将系统与压力浴耦合。
+
+> **NOTE**: Andersen 恒压方法满足 NPT 系综，因此可以与恒温方法一起，执行 NPT 生产运行。
+> 不过，这个方案只支持各向同性变形，即盒子在所有方向的修改是一致的。
+
+## Parrinello-Rahman barostat
+
+Parrinello-Rahman 对 Andersen 进行了扩展，允许改变盒子的形状和大小，即引入了盒子的各向异性变形。
+
+> **NOTE**: Parrinello-Rahman 一般和 Nosè-Hoover 恒温方法一起使用，实现 NPT 系综的生产运行。
+> Parrinello-Rahman 是目前在 MD 中使用最多的恒压方法。
 
 ## 参考
 
