@@ -10,6 +10,7 @@
 - [运动方程](basic/equations_of_motion.md)
 - [恒温器](basic/thermostats.md)
 - [恒压器](basic/barostats.md)
+- [系综](basic/ensembles.md)
 
 ## 力场
 
