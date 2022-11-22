@@ -11,6 +11,8 @@
 - [恒温器](basic/thermostats.md)
 - [恒压器](basic/barostats.md)
 - [系综](basic/ensembles.md)
+- [周期性边界调节](basic/pbc.md)
+- [动力学模拟步骤](basic/setting_up_mds.md)
 
 ## 力场
 
