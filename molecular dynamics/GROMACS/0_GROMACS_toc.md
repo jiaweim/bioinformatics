@@ -6,9 +6,8 @@
 
 ## GROMACS 教程
 
-- [周期性边界条件](tutorial/pbc.md)
+- [GROMACS 执行模拟的步骤](tutorial/mds_gromacs.md)
 - [水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
-
 
 ## 参考
 
