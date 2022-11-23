@@ -7,6 +7,7 @@
 ## GROMACS 教程
 
 - [GROMACS 执行模拟的步骤](tutorial/mds_gromacs.md)
+- [轨迹文件管理](tutorial/trjconv_gromacs.md)
 - [水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
 
 ## 参考
