@@ -128,8 +128,6 @@ nsteps                  = 50000     ; 2 * 50000 = 100 ps
 dt                      = 0.002     ; 2 fs
 ```
 
-
-
 ## Preprocessing
 
 - **include**
