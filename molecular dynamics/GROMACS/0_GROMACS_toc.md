@@ -11,6 +11,7 @@
 - [提取热力学性质](tutorial/thermodynamics.md)
 - [计算 RMSD](tutorial/rmsd.md)
 - [索引文件](tutorial/create_index.md)
+- [模拟水中的蛋白质](tutorial/protein_in_water.md)
 - [水里的溶菌酶](tutorial/1_Lysozyme_in_water.md)
 
 ## 参考
