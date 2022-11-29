@@ -105,7 +105,7 @@ Group    12 (          Other) has 231165 elements
 可以用如下命令提前设置：
 
 ```bash
-printf "4 4" | gmx_mpi rms -f md.xtc -s md.tpr -o rmsd.xvg
+printf "4 4" | gmx rms -f md.xtc -s md.tpr -o rmsd.xvg
 ```
 
 生成的 rmsd.xvg 文件可以用 grace 绘图：

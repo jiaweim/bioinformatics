@@ -77,3 +77,4 @@ https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold
 - https://github.com/sokrypton/ColabFold
 - https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/beta/AlphaFold2_advanced.ipynb
 - https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb
+- https://docs.hpc.sjtu.edu.cn/app/bioinformatics/alphafold2.html
