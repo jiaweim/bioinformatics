@@ -33,7 +33,6 @@
   - [参考](#参考)
 
 Last updated: 2022-07-04, 13:47
-@author Jiawei Mao
 ****
 
 ## 简介
