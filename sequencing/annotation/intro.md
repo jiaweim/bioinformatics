@@ -6,6 +6,8 @@
   - [基因组结构预测工具](#基因组结构预测工具)
   - [基因组注释实例](#基因组注释实例)
     - [基于 AUGUSTUS 进行从头注释基因](#基于-augustus-进行从头注释基因)
+    - [基于 tblastn 与 GenomeThreader 进行同源基因注释](#基于-tblastn-与-genomethreader-进行同源基因注释)
+    - [](#)
 
 ***
 
@@ -45,3 +47,32 @@ MAKER2 能够使用转录组数据来提高注释的质量。MAKER2 使用从头
 ### 基于 AUGUSTUS 进行从头注释基因
 
 目前，从头预测软件大多是基于 HMM 和贝叶斯理论，通过已有物种的注释信息对软件进行训练，从训练结果中去推断一段基因序列中可能的结构。以下示例 AUGUSTUS 的注释。使用 anaconda 可以安装 AUGUSTUS。
+
+```bash
+$ conda install -c bioconda augustus
+```
+
+下面使用拟南芥的一段基因序列让 AUGUSTUS 预测。序列地址：http://plants.ensembl.org/index.html
+
+![](images/2023-03-30-16-57-42.png)
+
+ftp 地址：https://ftp.ensemblgenomes.ebi.ac.uk/pub/plants/release-56/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
+
+取拟南芥前 8000 bp 序列，命名为 TAI_8k.fa：
+
+```bash
+
+```
+
+
+这里，通过使用已知的拟南芥一段基因序列让 AUGUSTUS 预测，下载拟南芥的序列 TAIR10.fa(下载地址: https://www.arabidopsis.org/download/),取拟南芥的前 8000 bp 序列，命名为 TAI_8K.fa。
+
+### 基于 tblastn 与 GenomeThreader 进行同源基因注释
+
+同源基因注释是利用近缘物种已知基因进行序列比对，首先找到同源序列，然后在同源序列的基础上,根据基因信号，如剪接位点信号、基因起始和终止密码子对基因结构进行预测。
+
+在本节中，可以使用 tblastn 与 GenomeThreader 对同源基因进行预测。tblastn 是 NCBI 中的 blast+ 软件包的一部分。该工具将给定的核酸序列与蛋白质数据库中的序列按不同的阅读框进行比对，对于寻找数据库中序列没有标注的新编码区很有用。
+
+在本次分析中需要注释的基因是一种真菌 pudorinus。因此，可以使用同为真菌的生物同源基因组注释。在本节中，Saccharomyces_cerevisiae、Laccaria_bicolor、Amanita.thiersi、Pleurotus_pulmonarius、Pterula_gracilis 等五种真菌被用来注释 pudorinus。下载以上基因组数据后将其整合为一个 fasta 文件，命名为 all.pep.fa。
+
+### 

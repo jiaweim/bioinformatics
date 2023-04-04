@@ -29,15 +29,15 @@ mkdir [参数] 目录
 
 - 在当前工作目录，创建 `dir1` 目录
 
-```sh
-[root@localhost test]# mkdir dir1
+```bash
+$ mkdir dir1
 ```
 
 - 创建目录 `dir2`，并设置权限为 700
 
 ```sh
-[root@localhost test]# mkdir -m 700 dir2
-[root@localhost test]# ls -l
+$ mkdir -m 700 dir2
+$ ls -l
 total 0
 drwxr-xr-x. 2 root root 6 Jun  8 10:07 dir1
 drwx------. 2 root root 6 Jun  8 10:10 dir2
@@ -46,13 +46,13 @@ drwx------. 2 root root 6 Jun  8 10:10 dir2
 - 一次创建多个目录
 
 ```sh
-[root@localhost test]# mkdir dir3 dir4 dir5
-[root@localhost test]# ls
+$ mkdir dir3 dir4 dir5
+$ ls
 dir1  dir2  dir3  dir4  dir5
 ```
 
 - 创建嵌套目录
 
 ```sh
-[root@localhost test]# mkdir -p dir6/dir5/dir4
+$ mkdir -p dir6/dir5/dir4
 ```

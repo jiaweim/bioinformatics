@@ -4,6 +4,7 @@
   - [简介](#简介)
   - [实例](#实例)
   - [长格式信息说明](#长格式信息说明)
+  - [参考](#参考)
 
 2022-06-06, 12:31
 @author Jiawei Mao
@@ -21,7 +22,7 @@ ls [选项] [文件]
 
 |选项|长选项|说明|
 |---|---|---|
-|`-a`|`--all`|显示所有文件及目录 (包括以“.”开头的隐藏文件)|
+|`-a`|`--all`|显示以 `.` 开头的隐藏文件|
 |`-l`||使用长格式列出文件及目录的详细信息|
 |`-r`|`--reverse`|以相反顺序显示结果(默认依字母升序)|
 |`-t`||按文件最后修改时间排序|
@@ -41,14 +42,14 @@ ls [选项] [文件]
 - 输出当前目录中的文件（默认不含隐藏文件）
 
 ```sh
-[root@localhost ~]# ls
+$ ls
 anaconda-ks.cfg  initial-setup-ks.cfg  local
 ```
 
 - 输出当前目录中的文件（含隐藏文件）
 
 ```sh
-[root@localhost ~]# ls -a
+$ ls -a
 .   anaconda-ks.cfg  .bash_logout   .bashrc  .config  .dbus                 local  .subversion  .viminfo
 ..  .bash_history    .bash_profile  .cache   .cshrc   initial-setup-ks.cfg  .pki   .tcshrc      .Xauthority
 ```
@@ -56,7 +57,7 @@ anaconda-ks.cfg  initial-setup-ks.cfg  local
 - 输出文件的长格式，包含详情信息
 
 ```sh
-[root@localhost ~]# ls -l
+$ ls -l
 total 8
 -rw-------. 1 root root 2089 Feb 17 08:04 anaconda-ks.cfg
 -rw-r--r--. 1 root root 2120 Feb 17 08:23 initial-setup-ks.cfg
@@ -66,14 +67,14 @@ drwxr-xr-x. 6 root root   56 May 27 11:05 local
 - 输出**指定目录**中的文件列表
 
 ```sh
-[root@localhost ~]# ls /root/local
+$ ls /root/local
 bin  include  lib  share
 ```
 
 - 列出**多个目录**中的文件列表
 
 ```sh
-[root@localhost ~]# ls ~ /usr
+$ ls ~ /usr
 /root:
 anaconda-ks.cfg  initial-setup-ks.cfg  local
 
@@ -84,7 +85,7 @@ bin  etc  games  include  java  lib  lib64  libexec  local  sbin  share  src  tm
 - 输出文件名称及索引节点信息
 
 ```sh
-[root@localhost playground]# ls -li
+$ ls -li
 total 8
 62277116535 drwxr-xr-x. 2 root root   30 Jun  8 11:35 dir1
 64425670017 drwxr-xr-x. 2 root root   30 Jun  8 11:36 dir2
@@ -147,3 +148,7 @@ drwxr-xr-x. 3 5078 5001       41 Apr 24  2020 Linux_x86_64/
 5. 4096，文件大小（字节数）
 6. 文件修改时间
 7. 文件名
+
+## 参考
+
+- 
