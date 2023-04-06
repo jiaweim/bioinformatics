@@ -1,6 +1,6 @@
 # Linux
 
-## 学习笔记
+## 教程
 
 - [Linux 版本](tutorials/linux_version.md)
 - [Shell 简介](tutorials/shell.md)
