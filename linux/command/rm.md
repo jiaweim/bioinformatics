@@ -1,5 +1,9 @@
 # rm
 
+- [rm](#rm)
+  - [简介](#简介)
+  - [示例](#示例)
+
 2022-06-02, 09:34
 @author Jiawei Mao
 *****
@@ -28,26 +32,26 @@ rm [参数] 文件
 - 删除文件，默认提示，输出 y 确认
 
 ```sh
-[root@localhost home]# rm a.fasta 
+$ rm a.fasta 
 rm: remove regular file ‘a.fasta’? y
 ```
 
 - 直接删除，不需要二次确认
 
 ```sh
-[root@localhost home]# rm -f a.fasta
+$ rm -f a.fasta
 ```
 
 - 强制删除目录及其内的所有文件
 
 ```sh
-[root@localhost home]# rm -rf Documents
+$ rm -rf Documents
 ```
 
 - 除了在删除文件之前，提示用户确认删除
 
 ```sh
-rm -i file1
+$ rm -i file1
 ```
 
 - 删除文件 file1, 目录 dir1，及 dir1 中的内容
@@ -71,5 +75,11 @@ rm -f *.txt
 - 强制清空服务器系统内的所有文件（千万不要用）
 
 ```sh
-rm -rf /*
+$ rm -rf /*
+```
+
+```bash
+$ rmdir /home/joe/nothing/ # 只能删空目录
+$ rm -r /home/joe/bigdir/  # 删除目录
+$ rm -rf /home/joe/hugedir/
 ```

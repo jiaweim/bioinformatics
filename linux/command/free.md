@@ -35,7 +35,7 @@ free [参数]
 - 以默认单位显示内存使用量
 
 ```sh
-[root@localhost ~]# free
+$ free
               total        used        free      shared  buff/cache   available
 Mem:      527747332    23999468    17294004       34824   486453860   501909456
 Swap:       4194300      554240     3640060

@@ -31,7 +31,7 @@ cal [参数] [月份] [年份]
 - 显示当前月份的日历
 
 ```sh
-[root@localhost ~]# cal
+$ cal
       June 2022     
 Su Mo Tu We Th Fr Sa
           1  2  3  4

@@ -30,28 +30,28 @@ date [选项] [+输出形式]
 - 以默认格式输出系统当前日期和时间
 
 ```sh
-[root@localhost ~]# date
+$ date
 Sun Jun  5 22:36:27 EDT 2022
 ```
 
 - 按照 “年-月-日” 的格式输出系统日期
 
 ```sh
-[root@localhost ~]# date "+%Y-%m-%d"
+$ date "+%Y-%m-%d"
 2022-06-05
 ```
 
 - 按照 “小时:分钟:秒” 的格式输出系统时间
 
 ```sh
-[root@localhost ~]# date "+%H:%M:%S"
+$ date "+%H:%M:%S"
 22:40:06
 ```
 
 - 设置当前系统的日期和时间
 
 ```sh
-[root@localhost ~]# date -s "20220606 10:41:00"
+$ date -s "20220606 10:41:00"
 Mon Jun  6 10:41:00 EDT 2022
 [root@localhost ~]# date
 Mon Jun  6 10:41:09 EDT 2022

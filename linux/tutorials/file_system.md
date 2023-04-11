@@ -13,6 +13,7 @@
     - [修改权限（数字）](#修改权限数字)
     - [修改权限（字母）](#修改权限字母)
     - [默认权限](#默认权限)
+  - [修改文件归属](#修改文件归属)
   - [注意事项](#注意事项)
 
 2022-06-06, 12:13
@@ -63,8 +64,12 @@ Linux 以分层目录结构组织所有文件。在 GNU/Linux 和其它类 Unix 
 | [cd](../command/cd.md) | 切换目录 |
 | [pwd](../command/pwd.md) | 打印当前工作目录名称 |
 | [mkdir](../command/mkdir.md) | 创建目录 |
-| chmod | 修改文件或目录权限 |
+| [chmod](../command/chmod.md) | 修改文件或目录权限 |
 | [ls](../command/ls.md) | 列出目录内容 |
+[mv](../command/mv.md)|移动文件
+cp|复制文件
+rm|删除文件
+
 
 ## 路径
 
@@ -82,26 +87,26 @@ Linux 以分层目录结构组织所有文件。在 GNU/Linux 和其它类 Unix 
 例如，我们先把工作目录切换到 `/usr/bin`：
 
 ```sh
-[root@localhost ~]# cd /usr/bin
-[root@localhost bin]# pwd
+$ cd /usr/bin
+$ pwd
 /usr/bin
 ```
 
 然后，把工作目录转到 `/usr/bin` 的父目录 `/usr`。有两种实现方法，使用绝对路径：
 
 ```sh
-[root@localhost bin]# cd /usr
-[root@localhost usr]# pwd
+$ cd /usr
+$ pwd
 /usr
 ```
 
 或使用相对路径：
 
 ```sh
-[root@localhost bin]# pwd
+$ pwd
 /usr/bin
-[root@localhost bin]# cd ..
-[root@localhost usr]# pwd
+$ cd ..
+$ pwd
 /usr
 ```
 
@@ -178,6 +183,17 @@ drwxr-xr-x 2 joe sales 1024 Jan 24 13:47 test
 
 - 文件 `ch3` 具有读写权限（owner, group），其它用户只有读权限，即只能看，不能修改或删除
 - 目录 `test` owner 具有读、写和执行权限，group 和其它用户只有读和执行权限。
+
+> **NOTE**
+> 对可执行文件，其 bit 值为 `s` 而不是 `x`。
+> 当 owner 或/与 group 执行权限为 `s`，即 `-rwsrxr-x`, `-rwxr-sr-x` 或 `-rwsr-sr-x`，该程序可以被任何用户运行，但运行进程所有权归 user/group，而非运行命令的用户。该行为分别称为 `set UID` 和 `set GID` 程序。
+> 例如，`mount` 命令（`/bin/mount`）权限为 `-rwsr-xr-x`，这样任何用户都能运行 mount 列出挂载的文件系统（大多时候，仍然需要 root 权限使用 mount 命令挂载文档系统）。
+
+> **NOTE**
+> 如果 `t` 出现在目录末尾，如 `drwxrwxr-t`，称为 `sticky bit`。
+> 设置 `t` 表示允许其它 user 或 group 添加文件到目录，但不允许删除该目录其它用户的文件。
+> 为目录设置 `set GID`，则目录中创建的所有文件与目录的 group 相同。
+> 如果目录的执行 bit 设置为大写的 `S` 或 `T`，表示设置 `set GID` 和 `sticky bit`。
 
 ### 修改权限（数字）
 
@@ -278,8 +294,31 @@ $ umask -S
 u=rwx,g=rx,o=rx
 ```
 
+## 修改文件归属
 
+普通用户无法更改文档或目录的所有权，只能以 root 账户修改。例如，假设你以 root 用户在 joe 的 home 目录创建了文件 `memo.txt`，可以为 `joe` 分配所有权：
 
+```bash
+# chown joe /home/joe/memo.txt
+# ls -l /home/joe/memo.txt
+-rw-r--r--. 1 joe root 0 Dec 19 11:23 /home/joe/memo.txt
+```
+
+注意，`chown` 将用户更改为 `joe`，但 group 依然是 `root`。
+
+将 user 和 group 同时修改为 `joe`：
+
+```bash
+# chown joe:joe /home/joe/memo.txt
+# ls -l /home/joe/memo.txt
+-rw-r--r--. 1 joe joe 0 Dec 19 11:23 /home/joe/memo.txt
+```
+
+`chown` 也可以递归使用。如将整个目录更改为特定用户，使用 `-R` 选项。例如，插入一个 USB 设备，挂载在 `/media/myusb` 目录，并且希望将该驱动的所有内容授予用户 joe 所有权，可以用如下操作：
+
+```bash
+# chown -R joe:joe /media/myusb
+```
 
 ## 注意事项
 
