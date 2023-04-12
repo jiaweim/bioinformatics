@@ -5,7 +5,7 @@
   - [选项](#选项)
   - [示例](#示例)
 
-Last updated: 2023-04-04, 19:35
+Last updated: 2023-04-12, 11:10
 ****
 
 ## 简介
@@ -47,4 +47,70 @@ $ cd [-L|[-P [-e]] [-@]] [dir]
 
 ```bash
 $ cd ~
+```
+
+或者：
+
+```bash
+$ cd
+```
+
+- 切换到指定用户的 home 目录
+
+```bash
+$ cd ~user_name
+```
+
+- 绝对路径（从根目录开始）
+
+```bash
+$ cd /usr/bin/
+$ pwd
+/usr/bin
+```
+
+- 相对路径（从当前目录开始）
+
+假设当前目录为 `/usr/bin`，到 `/usr` 有两种方式。
+
+1. 绝对路径
+
+```bash
+mjw@happy:/usr/bin$ cd /usr
+mjw@happy:/usr$ pwd
+/usr
+```
+
+2. 相对路径
+
+```bash
+mjw@happy:/usr/bin$ cd ..
+mjw@happy:/usr$ pwd
+/usr
+```
+
+切换回 `/usr/bin` 目录：
+
+1. 绝对路径
+
+```bash
+mjw@happy:/usr$ cd /usr/bin
+mjw@happy:/usr/bin$ pwd
+/usr/bin
+```
+
+2. 相对路径
+
+```bash
+mjw@happy:/usr$ cd ./bin
+mjw@happy:/usr/bin$ pwd
+/usr/bin
+```
+
+另外，`./` 大多时候可以忽略，所以相对路径方式可以写为：
+
+```bash
+mjw@happy:/usr$ cd bin
+mjw@happy:/usr/bin$ pwd
+/usr/bin
 ```

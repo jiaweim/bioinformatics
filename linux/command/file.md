@@ -4,15 +4,15 @@
   - [简介](#简介)
   - [实例](#实例)
 
-2022-06-07, 12:48
+Last updated: 2023-04-12, 13:10
 ****
 
 ## 简介
 
-`file` 命令用于识别文件类型，也可以辨别一些内容的编码格式。由于Linux系统并不是像Windows 系统那样通过扩展名来定义文件类型，因此用户无法直接通过文件名来进行分辨。`file` 命令通过分析文件头部信息中的标识来显示文件类型，使用很方便。
+`file` 命令用于识别文件类型，也可以辨别一些内容的编码格式。由于 Linux 系统不像 Windows 系统那样通过扩展名来定义文件类型，因此用户无法直接通过文件名来分辨。`file` 命令通过分析文件头部信息中的标识来显示文件类型，使用很方便。
 
 ```sh
-file [选项] 文件
+file [OPTION...] [FILE...]
 ```
 
 |选项|说明|
@@ -31,35 +31,35 @@ file [选项] 文件
 - 查看文件类型
 
 ```sh
-[root@localhost data]# file README 
+$ file README 
 README: ASCII text
 ```
 
 - 查看目录
 
 ```sh
-[root@localhost data]# file threshold/
+$ file threshold/
 threshold/: directory
 ```
 
 - 查看命令
 
 ```sh
-[root@localhost data]# file /bin/ls
+$ file /bin/ls
 /bin/ls: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, BuildID[sha1]=c8ada1f7095f6b2bb7ddc848e088c2d615c3743e, stripped
 ```
 
 - 查看类型，但不显示文件名
 
 ```sh
-[root@localhost data]# file -b README 
+$ file -b README 
 ASCII text
 ```
 
 - 以 MIME 类别显示文件类型
 
 ```sh
-[root@localhost data]# file -i README 
+$ file -i README 
 README: text/plain; charset=us-ascii
 ```
 
@@ -67,4 +67,11 @@ README: text/plain; charset=us-ascii
 
 ```sh
 
+```
+
+- 查看图像
+
+```bash
+mjw@happy:~/test$ file c.png
+c.png: PNG image data, 4034 x 3238, 8-bit/color RGBA, non-interlaced
 ```
