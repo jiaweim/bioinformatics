@@ -7,8 +7,7 @@
   - [语法](#语法)
   - [示例](#示例)
 
-2022-06-08, 15:15
-@author Jiawei Mao
+Last updated: 2023-04-12, 14:38
 *****
 
 ## 简介
@@ -29,7 +28,12 @@ Linux系统中的链接文件有两种形式，一种是硬链接（hard link）
 
 硬链接和文件本身没有什么区别。当一个硬链接被删除时，这个链接被删除，但是文件本身的内容依然存在（所以它所在的磁盘空间不会被重新分配），直到所有关联这个文件的链接都删除。
 
-当创建硬链接时，实际上为文件创建了额外的名字部分，并且这些名字关联到相同的数据部分，系统会分配一连串的磁盘块给索引节点，然后索引节点与文件名部分关联。因此，每个硬链接都关联到一个具体的包含文件内容的索引节点。
+可以将文件想象成由两部分组成：
+
+- 包含文件内容的数据部分
+- 包含文件名的名称部分
+
+当创建硬链接时，实际上为文件创建了额外的名称部分，并且这些名字关联到相同的数据部分。系统会分配一连串的磁盘块给索引节点，然后索引节点与文件名部分关联。因此，每个硬链接都关联到一个具体的包含文件内容的索引节点。
 
 ### 符号链接
 
@@ -90,3 +94,42 @@ ln anaconda-ks.cfg ana.cfg
 ```sh
 ln -s initial-setup-ks.cfg ini.cfg
 ```
+
+- 判断硬链接指向文件
+
+要判断多个硬链接是否指向相同数据部分，可以使用 `ls -i` 选项，显示 inode 编号：
+
+```bash
+$ ls -li
+total 16
+56742 drwxr-xr-x 2 mjw mjw 4096 Apr 12 14:50 dir1
+56747 drwxr-xr-x 2 mjw mjw 4096 Apr 12 14:50 dir2
+56754 -rw-r--r-- 4 mjw mjw 1414 Apr 12 14:43 fun
+56754 -rw-r--r-- 4 mjw mjw 1414 Apr 12 14:43 fun-hard
+```
+
+第一个字段就是 inode 值，可以看到 fun 和 fun-hard 的 inode 值向量，表示两者是同一个文件。
+
+- 相对路径创建符号链接
+
+```bash
+$ pwd
+/home/mjw/playground
+$ ls -l
+total 16
+drwxr-xr-x 2 mjw mjw 4096 Apr 12 15:00 dir1
+drwxr-xr-x 2 mjw mjw 4096 Apr 12 15:00 dir2
+-rw-r--r-- 4 mjw mjw 1414 Apr 12 14:43 fun
+-rw-r--r-- 4 mjw mjw 1414 Apr 12 14:43 fun-hard
+lrwxrwxrwx 1 mjw mjw    3 Apr 12 14:59 fun-sym -> fun
+$ ln -s ../fun dir1/fun-sym
+$ ln -s ../fun dir2/fun-sym
+$ ls -l dir1
+total 4
+-rw-r--r-- 4 mjw mjw 1414 Apr 12 14:43 fun-hard
+lrwxrwxrwx 1 mjw mjw    6 Apr 12 15:00 fun-sym -> ../fun
+```
+
+在创建符号链接时，相当于用文本描述目标文件**相对于符号链接**的位置。
+
+在创建符号链接时，可以使用相对路径和绝对路径。大多时候，使用相对路径更合适。
