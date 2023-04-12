@@ -17,6 +17,14 @@
 [mv](mv.md)|移动和重命名文件或目录
 [pwd](pwd.md)|输出工作目录
 [rm](rm.md)|删除文件和目录
+type|显示命令类型
+which|显示可执行文件的位置
+help|显示 Shell 内置命令的帮助信息
+man|显示命令的手册页
+apropos|显示适合的命令清单
+whatis|显示手册页的简述
+info|显示命令的 info
+alias|创建别名
 
 ## IO
 
