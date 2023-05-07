@@ -1,32 +1,7 @@
 # mRNA 疫苗抗原表位预测与序列设计
 
-- [mRNA 疫苗抗原表位预测与序列设计](#mrna-疫苗抗原表位预测与序列设计)
-  - [概述](#概述)
-  - [mRNA 疫苗简介](#mrna-疫苗简介)
-  - [靶向不同疾病的 mRNA 疫苗抗原表位选择与进展](#靶向不同疾病的-mrna-疫苗抗原表位选择与进展)
-    - [新冠病毒 COVID-19](#新冠病毒-covid-19)
-    - [寨卡病毒](#寨卡病毒)
-    - [登革病毒](#登革病毒)
-    - [呼吸道合胞体病毒](#呼吸道合胞体病毒)
-    - [H10N8和H7N9流感](#h10n8和h7n9流感)
-    - [黄病毒](#黄病毒)
-    - [糖尿病](#糖尿病)
-    - [癌症](#癌症)
-  - [mRNA 疫苗设计的表位预测](#mrna-疫苗设计的表位预测)
-    - [表位预测方法](#表位预测方法)
-    - [抗原表位预测在疫苗设计中的案例](#抗原表位预测在疫苗设计中的案例)
-  - [利用软件设计 mRNA 疫苗](#利用软件设计-mrna-疫苗)
-    - [序列优化](#序列优化)
-    - [表位预测与SARS-CoV-2](#表位预测与sars-cov-2)
-    - [佐剂选择](#佐剂选择)
-    - [免疫原性预测](#免疫原性预测)
-    - [血清学分析](#血清学分析)
-    - [合理的疫苗设计](#合理的疫苗设计)
-  - [总结](#总结)
-  - [参考](#参考)
-
 Last updated: 2022-06-21, 13:46
-@editor Jiawei Mao
+@author Jiawei Mao
 ***
 
 ## 概述
@@ -44,7 +19,7 @@ mRNA疫苗主要包括两种类型:
 
 作为抗原来源的 mRNA 的一个关键优势在于它在引发 MHC-I 呈递和引起细胞毒性T淋巴细胞反应方面的高效率，使得抗原决定因素的类型和数量具有高度的通用性，允许快速开发疫苗。
 
-体外转录(IVT) mRNA 的基本结构包括一个蛋白质编码的开放阅读框(ORF)，其两侧为5' 和 3' 非翻译区，5' 末端是 7-甲基鸟苷 帽状结构，3' 末端为 poly(a) 尾巴。mRNA 进入宿主细胞后，被细胞翻译成蛋白质。这使得mRNA疫苗适合于将细胞质或跨膜蛋白传递到正确的细胞亚结构中。下图为mRNA疫苗介导免疫应答的机制示意图 ^[https://www.cas.org/resource/blog/covid-mrna-vaccine]。
+体外转录(IVT) mRNA 的基本结构包括一个蛋白质编码的开放阅读框(ORF)，其两侧为5' 和 3' 非翻译区，5' 末端是 7-甲基鸟苷 帽状结构，3' 末端为 poly(a) 尾巴。mRNA 进入宿主细胞后，被细胞翻译成蛋白质。这使得mRNA疫苗适合于将细胞质或跨膜蛋白传递到正确的细胞亚结构中。下图为mRNA疫苗介导免疫应答的机制示意图[^3]。
 
 ![](images/2022-06-21-09-09-42.png)
 
@@ -161,7 +136,7 @@ Yao等人也提到，蛋白质结合位点预测方法也常用于构象表位�
 |Solihah et al.|CluSMOTE |Support Vector Machine and Decision Tree|0.766 |B-cell |
 |Dalkas and Rooman|SEPIa |Random forest and Gaussian Naive Bayes |0.65 |B-cell |
 |Jespersen et al.|BepiPred-2.0 |Random forest |0.62 |B-cell |
-|Reynisson et al.|[NetMHCpan-4.1](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.1)^[https://academic.oup.com/nar/article/48/W1/W449/5837056]|Machine learning |0.994 |T-cell |
+|Reynisson et al.|[NetMHCpan-4.1](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.1)[^4]|Machine learning |0.994 |T-cell |
 |O’Donnell et al.|[MHCflurry-2.0](https://github.com/openvax/mhcflurry)|Neural network |0.992 |T-cell |
 |Moutaftsi et al.|IEDB Consensus |Scoring-matrix |0.988 |T-cell |
 |Kim et al.|SMMPMBEC |SMM with amino acid similarity matrix |0.978 |T-cell |
@@ -181,7 +156,7 @@ Yao等人也提到，蛋白质结合位点预测方法也常用于构象表位�
 
 ### 抗原表位预测在疫苗设计中的案例
 
-Lucas Michel-todó ^[Michel-Todó, L. et al. In silico Design of an Epitope-Based Vaccine Ensemble for Chagas Disease. Frontiers in Immunology 10, (2019).]等基于表位设计了一种针对克氏锥虫(一种引起南美锥虫病的原生动物寄生虫)的疫苗:
+Lucas Michel-todó[^5] 等基于表位设计了一种针对克氏锥虫(一种引起南美锥虫病的原生动物寄生虫)的疫苗:
 
 - 使用 IEDB MHC-I 结合预测算法预测 T 细胞表位，在克氏锥虫蛋白组上进行预测（H > 0.5），并要求肽段与任何人类或人类微生物组蛋白的相似性小于70%，最终得到 18 条肽段。计算这些肽段的预计保护覆盖率（projected protection coverage, PPC），所有肽段的 PPC > 10%，而总的 PPC 为 88.3%。
 - 对B细胞表位，同时采用基于结构和基于序列的方法。
@@ -190,24 +165,24 @@ Lucas Michel-todó ^[Michel-Todó, L. et al. In silico Design of an Epitope-Base
 
 在最终设计中，共有 30 个抗原表位被纳入疫苗集合，包括 18 个CD8+ T细胞抗原表位、2个 CD4+ T 细胞抗原表位和 10 个B细胞抗原表位。
 
-Gregory 等人^[Gregory, S. H. et al. Epitope-based vaccination against pneumonic tularemia. Vaccine 27, 5299–5306 (2009).]针对细菌病原体设计了一种基于抗原表位的 DNA 疫苗，该疫苗涉及 HLA-II 限制性抗原表位的预测和验证。他们使用 EpiMatrix 和Epivax 对从两组细菌蛋白（一组是假定的分泌蛋白，另一组来自文献）中筛选出来的肽段进行评分。最终筛选出 14 个抗原表位纳入疫苗设计，其中 6 个为 100% 保守，4 个为部分保守。接种疫苗后，注射致死剂量病原体的小鼠存活率明显提高。
+Gregory 等人[^1]针对细菌病原体设计了一种基于抗原表位的 DNA 疫苗，该疫苗涉及 HLA-II 限制性抗原表位的预测和验证。他们使用 EpiMatrix 和Epivax 对从两组细菌蛋白（一组是假定的分泌蛋白，另一组来自文献）中筛选出来的肽段进行评分。最终筛选出 14 个抗原表位纳入疫苗设计，其中 6 个为 100% 保守，4 个为部分保守。接种疫苗后，注射致死剂量病原体的小鼠存活率明显提高。
 
 ## 利用软件设计 mRNA 疫苗
 
 辅助疫苗设计的计算工具包括表位预测、免疫原性/抗原性预测、蛋白质/基因数据库、表位识别等。
 
-在系统生物学和结构抗原设计方面，研究表明使用基于系统模拟的元分析（meta-analytical）框架可以成功预测生物标志物。比如，Vaxjo ^[https://www.violinet.org/vaxjo/] 数据库可以辅助找到疫苗的潜在佐剂。在线软件 VaxiJen ^[http://www.ddg-pharmfac.net/vaxijen/VaxiJen/VaxiJen.html] 可用于抗原预测，该软件得到广泛认可，被应用于各种研究中。其他应用于疫苗开发的生物信息学方法包括结构方法、分子动力学模拟和分子对接等。然而，由于许多预测模型的准确性不理想，计算工具尚未在 mRNA 疫苗设计中广泛应用。对研究人员来说，计算工具的使用也可能需要一个陡峭的学习曲线，许多工具需要对编程或算法有一定程度的理解才能有效地使用。
+在系统生物学和结构抗原设计方面，研究表明使用基于系统模拟的元分析（meta-analytical）框架可以成功预测生物标志物。比如，Vaxjo[^6] 数据库可以辅助找到疫苗的潜在佐剂。在线软件 VaxiJen[^7] 可用于抗原预测，该软件得到广泛认可，被应用于各种研究中。其他应用于疫苗开发的生物信息学方法包括结构方法、分子动力学模拟和分子对接等。然而，由于许多预测模型的准确性不理想，计算工具尚未在 mRNA 疫苗设计中广泛应用。对研究人员来说，计算工具的使用也可能需要一个陡峭的学习曲线，许多工具需要对编程或算法有一定程度的理解才能有效地使用。
 
 随着公开数据越来越多，机器学习等新技术开始改善计算工具在疫苗设计中的使用。在设计过程中，计算工具可以辅助研究人员预测表位、优化序列以及分析目标人群等。通过减少设计阶段的不确定性，计算可以可以帮助提供疫苗的效力。下表概述了目前可用于疫苗设计的计算工具。
 
 |Author|Application|Software/algorithm|
 |---|---|---|
-|Zhang et al. ^[Zhang, H. et al. LinearDesign: Efficient Algorithms for Optimized mRNA Sequence Design. arXiv:2004.10177 [q-bio] (2020).]|Sequence optimisation |LinearDesign |
+|Zhang et al.[^8]|Sequence optimisation |LinearDesign |
 |Multiple works |Epitope prediction |Table 3 |
-|Chaudhury et al. ^[Chaudhury, S. et al. Combining immunoprofiling with machine learning to assess the effects of adjuvant formulation on human vaccine-induced immunity. Human Vaccines & Immunotherapeutics 16, 400–411 (2020).]|Adjuvant selection |Machine learning |
-|Lee et al. ^[Lee, E. K. et al. Machine Learning for Predicting Vaccine Immunogenicity. Interfaces 46, 368–390 (2016).]|Immunogenicity prediction |DAMIP |
-|Xu et al. ^[Xu, G. J. et al. Comprehensive serological profiling of human populations using a synthetic human virome. Science 348, aaa0698 (2015).]|Profiling|VirScan |
-|Rahman et al. ^[Rahman, A., Hossain, M. I., Tamanna, S. & Ullah, M. N. Recognition of A Highly Conserved DSRCPTQ Epitope in Envelope Protein of Zika Virus Through in silico Approaches. 2020.02.11.943530 (2020) doi:10.1101/2020.02.11.943530.]|Rational vaccine design |UGENE |
+|Chaudhury et al.[^9]|Adjuvant selection |Machine learning |
+|Lee et al.[^10]|Immunogenicity prediction |DAMIP |
+|Xu et al.[^11]|Profiling|VirScan |
+|Rahman et al. [^2]|Rational vaccine design |UGENE |
 
 > 用于疫苗设计的计算工具
 
@@ -220,8 +195,6 @@ mRNA疫苗的主要缺点，如稳定性差、蛋白质翻译效率低，可以�
 ### 表位预测与SARS-CoV-2  
 
 免疫原性map可用于为多种疫苗开发模式提供信息。通过与SARS-CoV-2密切相关的α和β冠状病毒的比较，确定了SARS-CoV-2的保守区域。抗原的选择是基于(i)对自身免疫较高的安全性预测，以及(ii)不同肽段较高的的免疫原性。
-
-
 
 使用都需要结构数据的两个工具BepiPred和DiscoTope2.0，同时评估B细胞表位。基于线性和构象B细胞表位评分，从S蛋白中获得了一个33-mer肽。通过将生成的33-mer肽与来自IEDB的表位进行比较，估计了预测的准确性，生成了评分最高的肽段序列，其中包含了5个获得性氨基酸残基，增加了S蛋白与ACE2的结合。此外，研究人员还提出构建多价mRNA疫苗结构，由多种编码B细胞和/或T细胞表位亚群的SARS-CoV-2微基因（minigenes）组成，以便在APCs中表达。
 
@@ -241,22 +214,28 @@ mRNA疫苗的主要缺点，如稳定性差、蛋白质翻译效率低，可以�
 
 合理的疫苗设计是一种寻找和改进当前疫苗设计中次优方法的设计策略。mRNA疫苗长期存在可被RNA酶快速降解，并只能诱导适度的DC激活的问题。最近学界提出了一种双组分的mRNA疫苗，由鱼精蛋白复合物mRNA和裸mRNA混合而成，皮内注射可同时实现预防和治疗性抗肿瘤作用。目前的mRNA疫苗包含结构修饰，如加帽、加尾、假尿苷修饰等。Ⅰ型干扰素IFNs是抗病毒宿主防御机制中的重要分子,然而，它们可能会干扰mRNA的表达，在合理的疫苗设计中应加以考虑。
 
-
-
 一个关于保守性表位预测的案例是Rahman等人利用UGENE(一种提供集成生物信息学工具的应用程序)来识别寨卡病毒的保守区域。他们使用三种计算模型来预测保守区域，三种方法中的常见肽被选为候选抗原表位。在E蛋白中发现1个表位，在NS5蛋白区域发现2个表位。在305个寨卡病毒序列中，3个候选抗原表位均100%保守。
 
 ## 总结
 
 对于SARS-CoV-2 mRNA疫苗，目前两家最大的竞争对手都使用了相同的传递系统和免疫原设计。虽然这种设计引起了类似于自然病毒感染的免疫反应，并在临床试验中显示了较高的有效性，但它仍有待优化的空间，以便更有效、更稳定的呈现表位。
 
-
-
 首先，预融合构象在进入机体后可能需要额外的维持条件，因为大分子可能会被环境因素改变。其次，另一种免疫原(如N蛋白)也可加以考虑，添加不同的免疫原可以帮助提高疫苗的效力，并减少突变逃逸的可能性。第三，尽管在疫苗中使用S蛋白的原始构象可以模仿自然的病毒感染，但T细胞和中和抗体只能结合特定的肽段，而不能结合整个蛋白质，只编码必要的表位可以释放更多的空间，并增加mRNA疫苗的稳定性。此外，如果SARS-CoV-2的S蛋白发生显著突变，可以逃避现有疫苗提供的免疫，那么重新调整表位以适应新的突变将比设计和编码新的S蛋白构象更容易。基于此，表位预测将是助力疫苗设计的有力工具。
-
-
 
 本文所讨论的表位预测方法主要针对T细胞表位，不能用于体液反应的评估。对于B细胞表位，有限的计算预测方法还难以获得令人满意的结果。训练一个准确的构象B细胞表位预测模型可能是改进基于表位的疫苗设计的下一步。
 
 ## 参考
 
 - Cai, X., Li, J. J., Liu, T., Brian, O. & Li, J. Infectious disease mRNA vaccines and a review on epitope prediction for vaccine design. Briefings in Functional Genomics 20, 289–303 (2021).
+
+[^1]: Gregory, S. H. et al. Epitope-based vaccination against pneumonic tularemia. Vaccine 27, 5299–5306 (2009).
+[^2]: Rahman, A., Hossain, M. I., Tamanna, S. & Ullah, M. N. Recognition of A Highly Conserved DSRCPTQ Epitope in Envelope Protein of Zika Virus Through in silico Approaches. 2020.02.11.943530 (2020) doi:10.1101/2020.02.11.943530.
+[^3]: https://www.cas.org/resource/blog/covid-mrna-vaccine
+[^4]: https://academic.oup.com/nar/article/48/W1/W449/5837056
+[^5]: Michel-Todó, L. et al. In silico Design of an Epitope-Based Vaccine Ensemble for Chagas Disease. Frontiers in Immunology 10, (2019).
+[^6]: https://www.violinet.org/vaxjo/
+[^7]: http://www.ddg-pharmfac.net/vaxijen/VaxiJen/VaxiJen.html
+[^8]: Zhang, H. et al. LinearDesign: Efficient Algorithms for Optimized mRNA Sequence Design. arXiv:2004.10177 [q-bio] (2020).
+[^9]: Chaudhury, S. et al. Combining immunoprofiling with machine learning to assess the effects of adjuvant formulation on human vaccine-induced immunity. Human Vaccines & Immunotherapeutics 16, 400–411 (2020).
+[^10]: Lee, E. K. et al. Machine Learning for Predicting Vaccine Immunogenicity. Interfaces 46, 368–390 (2016).
+[^11]: Xu, G. J. et al. Comprehensive serological profiling of human populations using a synthetic human virome. Science 348, aaa0698 (2015).
