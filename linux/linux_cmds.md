@@ -1,2 +1,0 @@
-- [echo](command/echo.md)
-- [export](command/export.md)
