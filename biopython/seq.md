@@ -18,6 +18,7 @@
   - [15. 方法](#15-方法)
     - [find](#find)
     - [index](#index)
+  - [参考](#参考)
 
 Last updated: 2022-06-17, 13:55
 @author Jiawei Mao
@@ -264,9 +265,9 @@ genbank 数据库保存的为正义链（sense strand），也称为 coding stra
        Single stranded messenger RNA
 ```
 
-这是一段双链 DNA 片段，编码一条肽段。转录从模板链（template strand）开始，通过反向互补生成 mRNA。但是，在 Biopython 和其它生信工具中，通常直接使用编码链，替换 `T -> U` 就获得了 mRNA 序列。
+这是一段双链 DNA 片段，编码一条肽段。转录从模板链（template strand）开始，通过反向互补生成 mRNA。但是，在 Biopython 和其它生信工具中，通常直接使用 coding strand，替换 `T -> U` 就获得了 mRNA 序列。
 
-下面演示用 Biopython 进行转录，首先创建编码链和模板链，序列和上图一致：
+下面用 Biopython 进行转录，首先创建编码链和模板链的 `Seq` 对象，序列和上图一致：
 
 ```python
 >>> from Bio.Seq import Seq
@@ -278,8 +279,8 @@ Seq('ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG')
 Seq('CTATCGGGCACCCTTTCAGCGGCCCATTACAATGGCCAT')
 ```
 
-> [!NOTE]
-> 核苷酸一般从 5'->3' 方向读取，上图中模板链是 3'->5' 显示的
+!!! note
+    核苷酸一般从 5'->3' 方向读取，上图模板链是按 3'->5' 顺序显示的
 
 然后，用 `Seq` 的 `transcribe` 方法转录生成 mRNA：
 
@@ -293,7 +294,7 @@ Seq('AUGGCCAUUGUAAUGGGCCGCUGAAAGGGUGCCCGAUAG')
 
 可以发现，只是将 T 替换成了 U，即 `transcribe()` 的功能，就是将 `T` 替换为 `U`。
 
-如果想和生物转录过程一样，从模板链开始，则可以分两步进行：
+如果想和生物转录过程一样，从模板链开始，则需要分两步进行：
 
 ```python
 >>> template_dna.reverse_complement().transcribe()
@@ -364,8 +365,8 @@ Seq('MAIVMGRWKGAR*')
 Seq('MAIVMGRWKGAR')
 ```
 
-> [!NOTE]
-> 使用 `to_stop` 参数时，终止密码子不会翻译，即终止符不会包含在蛋白序列中
+!!! note
+    使用 `to_stop` 参数时，终止密码子不会翻译，即终止符不会包含在蛋白序列中
 
 如果不喜欢默认 `*`，可以用 `stop_symbol` 自定义终止符：
 
@@ -656,3 +657,7 @@ ValueError: subsection not found
 >>> my_rna.find("T")
 -1
 ```
+
+## 参考
+
+- http://biopython.org/DIST/docs/tutorial/Tutorial.html

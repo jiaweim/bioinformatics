@@ -7,7 +7,7 @@
     - [从文件到记录列表](#从文件到记录列表)
     - [提取数据](#提取数据)
     - [修改数据](#修改数据)
-  - [从压缩文件解析序列](#从压缩文件解析序列)
+  - [2. 从压缩文件解析序列](#2-从压缩文件解析序列)
   - [从网络解析序列](#从网络解析序列)
     - [解析网络 GenBank 序列](#解析网络-genbank-序列)
     - [解析网络 SwissPro 序列](#解析网络-swisspro-序列)
@@ -303,9 +303,7 @@ CGATCGAGTGAATCCGGAGGACCGGTGTACTCAGCTCACCGGGGGCATTGCTCCCGTGGT
 GACCCTGATTTGTTGTTGGGCCGCCTCGGGAGCGTCCATGGCGGGT
 ```
 
-## 从压缩文件解析序列
-
-
+## 2. 从压缩文件解析序列
 
 用 Python 的 `gzip` 模块打开压缩文件进行处理：
 
@@ -568,7 +566,7 @@ AGTTTATATATAAATTTCCTTTTTATTGGA
 
 ### 序列格式转换
 
-结合 `SeqIO.parse()` 和 `SeqIO.write()` 函授，可以实现文件格式转换。
+结合 `SeqIO.parse()` 和 `SeqIO.write()` 函数，可以实现文件格式转换。
 
 例如，读取 GenBank 格式的 ls_orchid.gbk 文件，输出 FASTA 格式：
 
