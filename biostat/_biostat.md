@@ -5,3 +5,4 @@
 - [假设检验](./test.md)
 - [t-test](./t-test.md)
 - [置信区间](./confidence_interval.md)
+- [paired-t test](./pair-t-test.md)
