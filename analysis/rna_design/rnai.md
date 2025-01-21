@@ -24,7 +24,7 @@
   - [参考](#参考)
 
 2021-06-02, 19:20
-@Jiawei Mao
+@author Jiawei Mao
 ***
 
 ## 基因沉默
